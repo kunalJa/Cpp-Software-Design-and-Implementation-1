@@ -43,8 +43,9 @@ CMakeLists.txt
 ehthumbs.db
 Thumbs.db
 
-# Eclipse project file #
+# project files #
 ########################
+.idea/
 .metadata
 .classpath
 .project
