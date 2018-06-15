@@ -81,6 +81,6 @@ int main(void) {
     fruityTest();
     dogTest();
     punctuationTests();
-    //generalTest1();
-    //generalTest2();
+    generalTest1();
+    generalTest2();
 }	
