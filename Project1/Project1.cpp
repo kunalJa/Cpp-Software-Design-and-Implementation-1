@@ -71,6 +71,19 @@ void spellCheck(char article[], char dictionary[]) {
         }
         currentChar = article[currentCharIndex];
     }
+
+    if (wordFound == 1){ // i.e. a word was found but reached the end of the article before a non-letter character arrived
+        int wordLength = currentCharIndex - wordStart;
+        if (wordLength > 1){
+            word current = {&(article[wordStart]), wordLength};
+            if (!inDictionary(current, dictionary)){
+                for(int i = 0; i < current.length; i++){
+                    printf("%c", current.word_ptr[i]);
+                }
+                printf("\n");
+            }
+        }
+    }
 }
 
 int isALetter(char c){

@@ -80,7 +80,7 @@ int main(void) {
     /* for starters, uncomment the following tests, one at a time */
     fruityTest();
     dogTest();
-    //punctuationTests();
+    punctuationTests();
     //generalTest1();
     //generalTest2();
 }	
