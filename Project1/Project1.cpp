@@ -27,7 +27,6 @@
  * almost certainly find it easiest to just write everything you need from scratch!
  */
 
-#define NULL 0
 
 typedef struct word_t {
     char* word_ptr;
@@ -38,16 +37,46 @@ int isALetter(char c);
 int inDictionary(word w, char dictionary[]);
 
 void spellCheck(char article[], char dictionary[]) {
-    int articleCharIndex = 0;
+    int currentCharIndex = 0;
     int wordStart = 0;
-    char currentChar = article[articleCharIndex];
+    int wordFound = 0;
+    char currentChar = article[currentCharIndex];
 
-    while(currentChar != NULL){
-        printf("%c", currentChar);
-        currentChar++;
+    while(currentChar != 0){
+        if(isALetter(currentChar) && wordFound == 0){
+            wordFound = 1;
+            currentCharIndex++;
+        }
+        else if(isALetter(currentChar) && wordFound == 1){
+            currentCharIndex++;
+        }
+        else if(!isALetter(currentChar) && wordFound == 0){
+            currentCharIndex++;
+            wordStart++;
+        }
+        else{
+            int wordLength = currentCharIndex - wordStart;
+            if (wordLength > 1){
+                word current = {&(article[wordStart]), wordLength};
+                if (!inDictionary(current, dictionary)){
+                    for(int i = 0; i < current.length; i++){
+                        printf("%c", current.word_ptr[i]);
+                    }
+                    printf("\n");
+                }
+            }
+            wordFound = 0;
+            currentCharIndex++;
+            wordStart = currentCharIndex;
+        }
+        currentChar = article[currentCharIndex];
     }
 }
 
 int isALetter(char c){
     return (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c<= 'z')));
+}
+
+int inDictionary(word w, char dictionary[]){
+    return 0;
 }
