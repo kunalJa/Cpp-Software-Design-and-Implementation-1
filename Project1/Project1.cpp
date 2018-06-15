@@ -27,6 +27,27 @@
  * almost certainly find it easiest to just write everything you need from scratch!
  */
 
+#define NULL 0
+
+typedef struct word_t {
+    char* word_ptr;
+    int length;
+} word;
+
+int isALetter(char c);
+int inDictionary(word w, char dictionary[]);
 
 void spellCheck(char article[], char dictionary[]) {
+    int articleCharIndex = 0;
+    int wordStart = 0;
+    char currentChar = article[articleCharIndex];
+
+    while(currentChar != NULL){
+        printf("%c", currentChar);
+        currentChar++;
+    }
+}
+
+int isALetter(char c){
+    return (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c<= 'z')));
 }
