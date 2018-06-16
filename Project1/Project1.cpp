@@ -1,14 +1,14 @@
-/*
- * Project1.cpp
- * 
- * Name: Kunal Jain
- * EE312 Summer 2018
- * SpellCheck
- */
+// SpellCheck <Project1.cpp>
+// EE w312 Project 1 submission by
+// Kunal Jain
+// ksj572
+// Slip days used: 0
+// Summer 2018
+
 
 #include <stdio.h> // provides declarations for printf and putchar
 #include <stdint.h> // provides declarations for int32_t uint32_t and the other (new) standard C types
-#include "header.c"
+
 
 /* All of your code must be in this file. Please no #includes other than standard system headers (ie.., stdio.h, stdint.h)
  *
