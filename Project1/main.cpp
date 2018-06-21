@@ -59,6 +59,14 @@ void punctuationTests(void) {
 	printf("****DONE****\n");
 }
 
+void newlineTest(void) {
+    printf("\n\n******* Starting Base Test #3 (punctuation) *******\n");
+    char dictionary[] = "i\nam\niron\nman"; // the dictionary can contain punctuation
+    char article[] = "I am iron man.";
+    spellCheck(article, dictionary); // should print: don
+    printf("****DONE****\n");
+}
+
 void generalTest1(void) {
 	printf("\n\n******* Starting General Test #1 *******\n");
 	readFile("greek-finances.txt", article);
@@ -83,4 +91,5 @@ int main(void) {
     punctuationTests();
     generalTest1();
     generalTest2();
+    newlineTest();
 }	
