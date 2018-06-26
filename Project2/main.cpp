@@ -382,12 +382,30 @@ void testMultiplyMatrixD(void) {
     printf("passed! :-)\n");
 }
 
+void testMultiplyMatrixE(void) {
+    double a[6] = {
+            1, 2, 3, 4, 5, 6}; // 2x3
+    double b[3] = {
+            9, 8, 7}; // 3x1
+    double expected[2] = {
+            46, 118};
+    double c[2]; // 2x1
+
+    multiplyMatrices(a, 2, 3, b, 1, c);
+    printf("Stage 1 test testMultiplyMatrixE:...");
+    if (!assertEqualMatrices(c, expected, 2, 1)) {
+        return;
+    }
+    printf("passed! :-)\n");
+}
+
+
 void testStage1(void) {
     testMultiplyMatrixA();
     testMultiplyMatrixB();
     testMultiplyMatrixC();
     testMultiplyMatrixD();
-    
+    testMultiplyMatrixE();
 }
 
 /* ---------------------------------------- */
@@ -505,10 +523,38 @@ void testMultiplyMatrixPtrC(void) {
     printf("passed! :-)\n");
 }
 
+void testMultiplyMatrixPtrD(void) {
+    double **a;
+    double **b;
+    double **c;
+
+    a = (double **)malloc(sizeof(double *) * 100);
+    for (int i = 0; i < 100; i++) {
+        *(a + i) = (double *)malloc(sizeof(double) * 100);
+    }
+    b = (double **)malloc(sizeof(double *) * 100);
+    for (int i = 0; i < 100; i++) {
+        *(b + i) = (double *)malloc(sizeof(double) * 100);
+    }
+    generateRandomMatrixPtr(a, 100, 100);
+    generateIdentityMatrixPtr(b, 100, 100);
+    c = multiplyMatricesPtr(a, 100, 100, b, 100);
+    printf("Stage 2 testMultiplyMatrixPtrD:...");
+    if (!assertEqualMatricesPtr(a, c, 100, 100)) {
+        return;
+    }
+    memoryRelease(a, 100);
+    memoryRelease(b, 100);
+    memoryRelease(c, 100);
+
+    printf("passed! :-)\n");
+}
+
 void testStage2(void) {
     testMultiplyMatrixPtrA();
     testMultiplyMatrixPtrB();
     testMultiplyMatrixPtrC();
+    testMultiplyMatrixPtrD();
 }
 
 /* ---------------------------------------- */
@@ -597,10 +643,40 @@ void testTransposeC(void) {
     printf("passed! :-)\n");
 }
 
+void testTransposeD(void) {
+    double **result;
+    double **input_ptr;
+    double **expected_ptr;
+
+    double one_b[4] = {1, 2, 3, 4};
+    double two_b[4] = {5, 6, 7, 8};
+    double three_b[4] = {9, 10, 11, 12};
+    double *input_b[] = {one_b, two_b, three_b};
+    input_ptr = input_b;
+
+    double one_trans_b[3] = {1, 5, 9};
+    double two_trans_b[3] = {2, 6, 10};
+    double three_trans_b[3] = {3, 7, 11};
+    double four_trans_b[3] = {4, 8, 12};
+
+    double *expected_b[] = {one_trans_b, two_trans_b, three_trans_b, four_trans_b};
+    expected_ptr = expected_b;
+
+    printf("Stage 3 testTransposeD:...");
+    result = transposeMatrix(input_ptr, 3, 4);
+    if (!assertEqualMatricesPtr(result, expected_ptr, 4, 3)) {
+        return;
+    }
+
+    memoryRelease(result, 4);
+    printf("passed! :-)\n");
+}
+
 void testStage3(void) {
     testTransposeA();
     testTransposeB();
     testTransposeC();
+    testTransposeD();
 }
 
 int main(int argc, char **argv) {
