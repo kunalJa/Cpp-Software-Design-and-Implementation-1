@@ -37,7 +37,7 @@ void testStage2(void) {
 
 	printf("Starting stage 2 tests\n");
 	strcat(c_str1, " world");
-	printf("%s\n", c_str1); // nothing exciting, prints "hello world"
+	printf("%s\n", c_str1);
 
 	ut_str1 = utstrdup("hello ");
 	ut_str1 = utstrrealloc(ut_str1, 20);
@@ -96,11 +96,11 @@ void testStage4(void) {
      char p[20] = "Hello World!";
 	 UTString* utstr1 = utstrdup("Hello World");
      *(uint32_t*)( utstr1->string + utstr1->length + 1 ) = BAD_SIGNATURE;
-   //printf("crashing with utstrlen\n\n\n"); utstrlen(utstr1);	
-//printf("Crashing with utstrcpy\n\n\n"); utstrcpy(utstr1, p); 
-  // printf("crashing with utstrcat\n\n\n"); utstrcat(utstr1, p);
-//	 printf("crashing with utstrfree\n\n\n"); utstrfree(utstr1);
-   //printf("crashing with utstrrealloc\n\n\n"); utstrrealloc(utstr1, 40);
+     // printf("crashing with utstrlen\n\n\n"); utstrlen(utstr1);
+     // printf("Crashing with utstrcpy\n\n\n"); utstrcpy(utstr1, p);
+     // printf("crashing with utstrcat\n\n\n"); utstrcat(utstr1, p);
+     // printf("crashing with utstrfree\n\n\n"); utstrfree(utstr1);
+     // printf("crashing with utstrrealloc\n\n\n"); utstrrealloc(utstr1, 40);
 }
 
 int main(void) {

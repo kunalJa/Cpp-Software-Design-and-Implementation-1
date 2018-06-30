@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <assert.h>
 #include "String.h"
 
 #define SIGNATURE (~0xdeadbeef)
@@ -32,7 +33,7 @@ bool isOurs(const UTString* s) {
 }
 
 /*
- * Finds the size of a string
+ * Private function that finds the size of a string
  */
 int strLen(const char* src) {
     int i = 0;
@@ -53,6 +54,7 @@ void addSig(char* string, int startIndex){
 }
 
 /*
+ * Private Function
  * Copies a string to a heap allocated string
  * Adding the signature at the end
  */
@@ -90,11 +92,8 @@ UTString* utstrdup(const char* src) {
  *  s must be a valid UTString.
  */
 uint32_t utstrlen(const UTString* s) {
-	if (isOurs(s)) {
-	    return s->length;
-	}
-
-	return 1;
+    assert(isOurs(s));
+    return s->length;
 }
 
 /*
@@ -105,21 +104,20 @@ uint32_t utstrlen(const UTString* s) {
  * Update the length of s.
  * Return s with the above changes. */
 UTString* utstrcat(UTString* s, const char* suffix) {
-    if (isOurs(s)){
-        int suffixSize = strLen(suffix);
-        int i = s->length;
-        int j = 0;
+    assert(isOurs(s));
+    int suffixSize = strLen(suffix);
+    int i = s->length;
+    int j = 0;
 
-        while (i < s->length + suffixSize && i < s->capacity) { // Check whether we reached end of suffix or overflowing
-            s->string[i] = suffix[j];
-            i++;
-            j++;
-        }
-
-        s->length = i; // Updating the utStrings length
-        s->string[i] = '\0';
-        addSig(s->string, i + 1);
+    while (i < s->length + suffixSize && i < s->capacity) { // Check whether we reached end of suffix or overflowing
+        s->string[i] = suffix[j];
+        i++;
+        j++;
     }
+
+    s->length = i; // Updating the utStrings length
+    s->string[i] = '\0';
+    addSig(s->string, i + 1);
 
     return s;
 }
@@ -134,18 +132,17 @@ UTString* utstrcat(UTString* s, const char* suffix) {
  * Return dst with the above changes.
  */
 UTString* utstrcpy(UTString* dst, const char* src) {
-    if (isOurs(dst)){
-        int i = 0;
+    assert(isOurs(dst));
+    int i = 0;
 
-        while (src[i] != 0 && i < dst->capacity) {
-            dst->string[i] = src[i];
-            i++;
-        }
-
-        dst->length = i;
-        dst->string[i] = '\0';
-        addSig(dst->string, i + 1);
+    while (src[i] != 0 && i < dst->capacity) {
+        dst->string[i] = src[i];
+        i++;
     }
+
+    dst->length = i;
+    dst->string[i] = '\0';
+    addSig(dst->string, i + 1);
 
     return dst;
 }
@@ -154,6 +151,7 @@ UTString* utstrcpy(UTString* dst, const char* src) {
  * Free all memory associated with the given UTString. 
  */
 void utstrfree(UTString* self) {
+    assert(isOurs(self));
     free(self->string);
     free(self);
 }
@@ -168,7 +166,8 @@ void utstrfree(UTString* self) {
  * Return s with the above changes.
  */
 UTString* utstrrealloc(UTString* s, uint32_t new_capacity) {
-	if (s->capacity >= new_capacity || !isOurs(s)) {
+    assert(isOurs(s));
+	if (s->capacity >= new_capacity) {
 	    return s;
 	}
 
