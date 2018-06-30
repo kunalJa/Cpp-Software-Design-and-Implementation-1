@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include <stdio.h>
 #include "String.h"
 
 #define SIGNATURE (~0xdeadbeef)
@@ -44,6 +43,16 @@ int strLen(const char* src) {
 }
 
 /*
+ * Private Function to add string signature
+ */
+void addSig(char* string, int startIndex){
+    string[startIndex+3] = (char) (~0xde);
+    string[startIndex+2] = (char) (~0xad);
+    string[startIndex+1] = (char) (~0xbe);
+    string[startIndex] = (char) (~0xef);
+}
+
+/*
  * Copies a string to a heap allocated string
  * Adding the signature at the end
  */
@@ -54,10 +63,7 @@ void copyWithSIG(const char* src, char* heap) {
         i++;
     }
     heap[i] = '\0';
-    heap[i+4] = (char) (~0xde);
-    heap[i+3] = (char) (~0xad);
-    heap[i+2] = (char) (~0xbe);
-    heap[i+1] = (char) (~0xef);
+    addSig(heap, i + 1);
 }
 
 /* 
@@ -112,10 +118,7 @@ UTString* utstrcat(UTString* s, const char* suffix) {
 
         s->length = i; // Updating the utStrings length
         s->string[i] = '\0';
-        s->string[i+4] = (char) (~0xde);
-        s->string[i+3] = (char) (~0xad);
-        s->string[i+2] = (char) (~0xbe);
-        s->string[i+1] = (char) (~0xef);
+        addSig(s->string, i + 1);
     }
 
     return s;
@@ -141,10 +144,7 @@ UTString* utstrcpy(UTString* dst, const char* src) {
 
         dst->length = i;
         dst->string[i] = '\0';
-        dst->string[i+4] = (char) (~0xde);
-        dst->string[i+3] = (char) (~0xad);
-        dst->string[i+2] = (char) (~0xbe);
-        dst->string[i+1] = (char) (~0xef);
+        addSig(dst->string, i + 1);
     }
 
     return dst;
@@ -186,10 +186,7 @@ UTString* utstrrealloc(UTString* s, uint32_t new_capacity) {
 
     s->length = i;
     s->string[i] = '\0';
-    s->string[i+4] = (char) (~0xde);
-    s->string[i+3] = (char) (~0xad);
-    s->string[i+2] = (char) (~0xbe);
-    s->string[i+1] = (char) (~0xef);
+    addSig(s->string, i + 1);
     free(oldString);
 
     return s;
