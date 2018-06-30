@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
 #include "String.h"
 
 #define SIGNATURE (~0xdeadbeef)
@@ -53,10 +54,10 @@ void copyWithSIG(const char* src, char* heap) {
         i++;
     }
     heap[i] = '\0';
-    heap[i+1] = (char) 0xde;
-    heap[i+2] = (char) 0xad;
-    heap[i+3] = (char) 0xbe;
-    heap[i+4] = (char) 0xef;
+    heap[i+4] = (char) (~0xde);
+    heap[i+3] = (char) (~0xad);
+    heap[i+2] = (char) (~0xbe);
+    heap[i+1] = (char) (~0xef);
 }
 
 /* 
@@ -66,7 +67,7 @@ void copyWithSIG(const char* src, char* heap) {
  */
 UTString* utstrdup(const char* src) {
 	int srcLen = strLen(src);
-	int totalCapacity = (srcLen * sizeof(char)) + 4;
+	int totalCapacity = (srcLen * sizeof(char)) + 5;
 	char* String = (char*) malloc(totalCapacity);
 	copyWithSIG(src, String);
 
@@ -87,7 +88,7 @@ uint32_t utstrlen(const UTString* s) {
 	    return s->length;
 	}
 
-	return 0;
+	return 1;
 }
 
 /*
@@ -111,10 +112,10 @@ UTString* utstrcat(UTString* s, const char* suffix) {
 
         s->length = i; // Updating the utStrings length
         s->string[i] = '\0';
-        s->string[i+1] = (char) 0xde;
-        s->string[i+2] = (char) 0xad;
-        s->string[i+3] = (char) 0xbe;
-        s->string[i+4] = (char) 0xef;
+        s->string[i+4] = (char) (~0xde);
+        s->string[i+3] = (char) (~0xad);
+        s->string[i+2] = (char) (~0xbe);
+        s->string[i+1] = (char) (~0xef);
     }
 
     return s;
@@ -140,10 +141,10 @@ UTString* utstrcpy(UTString* dst, const char* src) {
 
         dst->length = i;
         dst->string[i] = '\0';
-        dst->string[i+1] = (char) 0xde;
-        dst->string[i+2] = (char) 0xad;
-        dst->string[i+3] = (char) 0xbe;
-        dst->string[i+4] = (char) 0xef;
+        dst->string[i+4] = (char) (~0xde);
+        dst->string[i+3] = (char) (~0xad);
+        dst->string[i+2] = (char) (~0xbe);
+        dst->string[i+1] = (char) (~0xef);
     }
 
     return dst;
@@ -153,10 +154,8 @@ UTString* utstrcpy(UTString* dst, const char* src) {
  * Free all memory associated with the given UTString. 
  */
 void utstrfree(UTString* self) {
-    if (isOurs(self)) {
-        free(self->string);
-        free(self);
-    }
+    free(self->string);
+    free(self);
 }
 
 /* 
@@ -178,7 +177,19 @@ UTString* utstrrealloc(UTString* s, uint32_t new_capacity) {
     s->capacity = new_capacity;
     s->string = newString;
 
-    s = utstrcpy(s, oldString);
+    int i = 0;
+
+    while (oldString[i] != 0 && i < s->capacity) {
+        s->string[i] = oldString[i];
+        i++;
+    }
+
+    s->length = i;
+    s->string[i] = '\0';
+    s->string[i+4] = (char) (~0xde);
+    s->string[i+3] = (char) (~0xad);
+    s->string[i+2] = (char) (~0xbe);
+    s->string[i+1] = (char) (~0xef);
     free(oldString);
 
     return s;
