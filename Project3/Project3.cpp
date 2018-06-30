@@ -98,22 +98,24 @@ uint32_t utstrlen(const UTString* s) {
  * Update the length of s.
  * Return s with the above changes. */
 UTString* utstrcat(UTString* s, const char* suffix) {
-	int suffixSize = strLen(suffix);
-	int i = s->length;
-	int j = 0;
+    if (isOurs(s)){
+        int suffixSize = strLen(suffix);
+        int i = s->length;
+        int j = 0;
 
-	while (i < s->length + suffixSize && i < s->capacity) { // Check whether we reached end of suffix or overflowing
-	    s->string[i] = suffix[j];
-	    i++;
-	    j++;
-	}
+        while (i < s->length + suffixSize && i < s->capacity) { // Check whether we reached end of suffix or overflowing
+            s->string[i] = suffix[j];
+            i++;
+            j++;
+        }
 
-	s->length = i; // Updating the utStrings length
-	s->string[i] = '\0';
-    s->string[i+1] = (char) 0xde;
-    s->string[i+2] = (char) 0xad;
-    s->string[i+3] = (char) 0xbe;
-    s->string[i+4] = (char) 0xef;
+        s->length = i; // Updating the utStrings length
+        s->string[i] = '\0';
+        s->string[i+1] = (char) 0xde;
+        s->string[i+2] = (char) 0xad;
+        s->string[i+3] = (char) 0xbe;
+        s->string[i+4] = (char) 0xef;
+    }
 
     return s;
 }
@@ -128,14 +130,33 @@ UTString* utstrcat(UTString* s, const char* suffix) {
  * Return dst with the above changes.
  */
 UTString* utstrcpy(UTString* dst, const char* src) {
-	return NULL;
+    if (isOurs(dst)){
+        int i = 0;
+
+        while (src[i] != 0 && i < dst->capacity) {
+            dst->string[i] = src[i];
+            i++;
+        }
+
+        dst->length = i;
+        dst->string[i] = '\0';
+        dst->string[i+1] = (char) 0xde;
+        dst->string[i+2] = (char) 0xad;
+        dst->string[i+3] = (char) 0xbe;
+        dst->string[i+4] = (char) 0xef;
+    }
+
+    return dst;
 }
 
 /*
  * Free all memory associated with the given UTString. 
  */
 void utstrfree(UTString* self) {
-
+    if (isOurs(self)) {
+        free(self->string);
+        free(self);
+    }
 }
 
 /* 
@@ -148,5 +169,17 @@ void utstrfree(UTString* self) {
  * Return s with the above changes.
  */
 UTString* utstrrealloc(UTString* s, uint32_t new_capacity) {
-	return NULL;
+	if (s->capacity >= new_capacity || !isOurs(s)) {
+	    return s;
+	}
+
+	char* oldString = s->string;
+	char* newString = (char*) malloc(new_capacity * sizeof(char) + 5);
+    s->capacity = new_capacity;
+    s->string = newString;
+
+    s = utstrcpy(s, oldString);
+    free(oldString);
+
+    return s;
 }
