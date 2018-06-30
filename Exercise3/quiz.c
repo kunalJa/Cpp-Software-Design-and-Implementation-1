@@ -43,6 +43,7 @@ int main(void) {
     printf("%d ", nums[i]);
   }
   puts(" ");
+  printf('HI');
  
   free(nums);
   return 0;
