@@ -95,7 +95,8 @@ void testStage3(void) {
 void testStage4(void) {
      char p[20] = "Hello World!";
 	 UTString* utstr1 = utstrdup("Hello World");
-     *(uint32_t*)( utstr1->string + utstr1->length + 1 ) = BAD_SIGNATURE;
+     utstrfree(utstr1);
+     // *(uint32_t*)( utstr1->string + utstr1->length + 1 ) = BAD_SIGNATURE;
      // printf("crashing with utstrlen\n\n\n"); utstrlen(utstr1);
      // printf("Crashing with utstrcpy\n\n\n"); utstrcpy(utstr1, p);
      // printf("crashing with utstrcat\n\n\n"); utstrcat(utstr1, p);

@@ -75,11 +75,11 @@ void copyWithSIG(const char* src, char* heap) {
  */
 UTString* utstrdup(const char* src) {
 	int srcLen = strLen(src);
-	int totalCapacity = (srcLen * sizeof(char)) + 5;
+	int totalCapacity = (srcLen * sizeof(char)) + 1 + sizeof(SIGNATURE);
 	char* String = (char*) malloc(totalCapacity);
 	copyWithSIG(src, String);
 
-	UTString* utString = (UTString*) malloc(2 * sizeof(uint32_t) + sizeof(char*));
+	UTString* utString = (UTString*) malloc(sizeof(UTString)); // 2 * sizeof(uint32_t) + sizeof(char*)
 	utString->length = srcLen;
 	utString->capacity = totalCapacity - 5; // Remove 1 byte for null termination and 4 bytes for signature
 	utString->string = String;
@@ -106,8 +106,8 @@ uint32_t utstrlen(const UTString* s) {
 UTString* utstrcat(UTString* s, const char* suffix) {
     assert(isOurs(s));
     int suffixSize = strLen(suffix);
-    int i = s->length;
-    int j = 0;
+    unsigned int i = s->length;
+    unsigned int j = 0;
 
     while (i < s->length + suffixSize && i < s->capacity) { // Check whether we reached end of suffix or overflowing
         s->string[i] = suffix[j];
@@ -133,7 +133,7 @@ UTString* utstrcat(UTString* s, const char* suffix) {
  */
 UTString* utstrcpy(UTString* dst, const char* src) {
     assert(isOurs(dst));
-    int i = 0;
+    unsigned int i = 0;
 
     while (src[i] != 0 && i < dst->capacity) {
         dst->string[i] = src[i];
@@ -172,11 +172,11 @@ UTString* utstrrealloc(UTString* s, uint32_t new_capacity) {
 	}
 
 	char* oldString = s->string;
-	char* newString = (char*) malloc(new_capacity * sizeof(char) + 5);
+	char* newString = (char*) malloc(new_capacity * sizeof(char) + 1 + sizeof(SIGNATURE));
     s->capacity = new_capacity;
     s->string = newString;
 
-    int i = 0;
+    unsigned int i = 0;
 
     while (oldString[i] != 0 && i < s->capacity) {
         s->string[i] = oldString[i];
