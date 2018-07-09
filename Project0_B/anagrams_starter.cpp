@@ -58,12 +58,14 @@ int length(char arr[]){
 int are_anagrams(char first_word[], char second_word[]) {
     int alphabet1[SIZE] = {0};
     int alphabet2[SIZE] = {0};
+    int lenFirst = length(first_word);
+    int lenSecond = length(second_word);
 
-    for (int i = 0; i < length(first_word); i++){
+    for (int i = 0; i < lenFirst; i++){
         alphabet1[first_word[i] - 'a'] ++;
     }
 
-    for (int j = 0; j < length(second_word); j++){
+    for (int j = 0; j < lenSecond; j++){
         alphabet2[second_word[j] - 'a'] ++;
     }
 
