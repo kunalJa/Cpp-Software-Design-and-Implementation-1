@@ -33,7 +33,7 @@ int inStock(String* Name, String* itemName, int itemAmount) {
     int which;
     int outOfStock;
 
-    if (itemAmount < 0) {
+    if (itemAmount <= 0) {
         return 0;
     }
 
