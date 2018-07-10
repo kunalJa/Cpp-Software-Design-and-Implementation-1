@@ -74,6 +74,7 @@ void reset() {
 
     for (int i = 0; i < num_customers; i++) {
         StringDestroy(&customers[i].name);
+        customerZero(&customers[i]);
     }
 
     bottlesPurchased = 0;
@@ -149,7 +150,7 @@ void processPurchase() {
         }
 
         if (customerIndex == num_customers) {
-            StringReAssign(&customers[customerIndex].name, &Name);
+            customers[customerIndex].name = StringDup(&Name);
             customerZero(&customers[customerIndex]);
             num_customers++;
         }
