@@ -182,6 +182,10 @@ void processInventory() {
     readString(&itemName);
     readNum(&itemAmount);
 
+    if (itemAmount <= 0) {
+        return;
+    }
+
     if (StringIsEqualTo(&bottles, &itemName)) {
         myInventory.bottles += itemAmount;
     } else if (StringIsEqualTo(&diapers, &itemName)) {
