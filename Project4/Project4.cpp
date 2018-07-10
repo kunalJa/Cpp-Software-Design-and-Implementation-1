@@ -183,6 +183,7 @@ void processInventory() {
     readNum(&itemAmount);
 
     if (itemAmount <= 0) {
+        StringDestroy(&itemName);
         return;
     }
 
