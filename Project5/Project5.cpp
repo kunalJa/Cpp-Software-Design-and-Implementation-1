@@ -69,6 +69,7 @@ bool isMemberSet(const Set* self, int x) {
     int mid;
     int low = 0;
     int high = self->len;
+
     while (low < high) {
         mid = (high - low) / 2;
         if (x < mid) {
@@ -91,6 +92,7 @@ bool isMemberSet(const Set* self, int x) {
  */
 void insertSet(Set* self, int x) {
     int* elements = (int*) malloc((self->len + 1) * sizeof(int));
+
     int j = 0;
     for (int i = 0; i < self->len; i++){
         if (x == self->elements[i]) {
@@ -120,6 +122,7 @@ void insertSet(Set* self, int x) {
  */
 void removeSet(Set* self, int x) {
     int* elements = (int*) malloc(self->len * sizeof(int));
+
     int j = 0;
     for (int i = 0; i < self->len; i++) {
         if (x != self->elements[i]) {
@@ -189,6 +192,29 @@ bool isEmptySet(const Set* self) {
 
 /* remove all elements from self that are not also elements of other */
 void intersectFromSet(Set* self, const Set* other) {
+    int* elements = (int*) malloc(self->len * sizeof(int));
+    int count = 0;
+
+    int k = 0;
+    int j = 0;
+    for (int i = 0; i < self->len; i++) {
+        if (j > other->len) {
+            elements[k++] = self->elements[i];
+            count++;
+        } else if (self->elements[i] < other->elements[j]) {
+            elements[k++] = self->elements[i];
+            count++;
+        } else if (self->elements[i] > other->elements[j]) {
+            j++;
+            i--;
+        } else {
+            j++;
+        }
+    }
+
+    free(self->elements);
+    self->elements = elements;
+    self->len = count;
 }
 
 /* remove all elements from self that are also elements of other */
