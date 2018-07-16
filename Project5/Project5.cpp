@@ -198,6 +198,22 @@ void intersectFromSet(Set* self, const Set* other) {
     int k = 0;
     int j = 0;
     for (int i = 0; i < self->len; i++) {
+        
+    }
+
+    free(self->elements);
+    self->elements = elements;
+    self->len = count;
+}
+
+/* remove all elements from self that are also elements of other */
+void subtractFromSet(Set* self, const Set* other) {
+    int* elements = (int*) malloc(self->len * sizeof(int));
+    int count = 0;
+
+    int k = 0;
+    int j = 0;
+    for (int i = 0; i < self->len; i++) {
         if (j > other->len) {
             elements[k++] = self->elements[i];
             count++;
@@ -217,10 +233,8 @@ void intersectFromSet(Set* self, const Set* other) {
     self->len = count;
 }
 
-/* remove all elements from self that are also elements of other */
-void subtractFromSet(Set* self, const Set* other) {
-}
-
 /* add all elements of other to self (obviously, without creating duplicate elements) */
 void unionInSet(Set* self, const Set* other) {
+    int* elements = (int*) malloc((self->len + other->len) * sizeof(int));
+    int count = 0;
 }
