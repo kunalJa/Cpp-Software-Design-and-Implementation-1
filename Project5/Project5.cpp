@@ -119,7 +119,18 @@ void insertSet(Set* self, int x) {
  * is almost definitely NOT worth the trouble
  */
 void removeSet(Set* self, int x) {
+    int* elements = (int*) malloc(self->len * sizeof(int));
+    int j = 0;
+    for (int i = 0; i < self->len; i++) {
+        if (x != self->elements[i]) {
+            elements[j++] = self->elements[i];
+        } else {
+            self->len--;
+        }
+    }
 
+    free(self->elements);
+    self->elements = elements;
 }
 
 /* done for you already */
