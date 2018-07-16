@@ -71,10 +71,10 @@ bool isMemberSet(const Set* self, int x) {
     int high = self->len;
 
     while (low < high) {
-        mid = (high - low) / 2;
-        if (x < mid) {
+        mid = low + (high - low) / 2;
+        if (x < self->elements[mid]) {
             high = mid;
-        } else if (x > mid) {
+        } else if (x > self->elements[mid]) {
             low = mid + 1;
         } else {
             return true;
