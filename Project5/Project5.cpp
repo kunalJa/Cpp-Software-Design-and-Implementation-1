@@ -155,10 +155,22 @@ void displaySet(const Set* self) {
 
 /* return true if self and other have exactly the same elements */
 bool isEqualToSet(const Set* self, const Set* other) {
+    if (self->len != other->len) {
+        return false;
+    }
+
+    for (int i = 0; i < self->len; i++) {
+        if (self->elements[i] != other->elements[i]) {
+            return  false;
+        }
+    }
+
+    return true;
 }
 
 /* return true if every element of self is also an element of other */
 bool isSubsetOf(const Set* self, const Set* other) {
+    
 }
 
 /* done for you */
