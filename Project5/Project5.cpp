@@ -247,4 +247,41 @@ void subtractFromSet(Set* self, const Set* other) {
 void unionInSet(Set* self, const Set* other) {
     int* elements = (int*) malloc((self->len + other->len) * sizeof(int));
     int count = 0;
+
+    int i = 0;
+    int j = 0;
+    for (int k = 0; k < self->len + other->len; k++) {
+        if (j > other->len) {
+            while (i < self->len) {
+                elements[k++] = self->elements[i++];
+                count++;
+            }
+            break;
+        }
+
+        if (i > self->len) {
+            while (j < other->len) {
+                elements[k++] = other->elements[j++];
+                count++;
+            }
+            break;
+        }
+
+        if (self->elements[i] < other->elements[j]){
+            elements[k] = self->elements[i++];
+            count++;
+        } else if (self->elements[i] > other->elements[j]) {
+            elements[k] = other->elements[j++];
+            count++;
+        } else {
+            elements[k] = self->elements[i];
+            i++;
+            j++;
+            count++;
+        }
+    }
+
+    free(self->elements);
+    self->elements = elements;
+    self->len = count;
 }
