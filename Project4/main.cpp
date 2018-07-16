@@ -60,7 +60,7 @@ int main(void) {
 	purchase = StringCreate("Purchase");
 	summarize = StringCreate("Summarize");
 	quit = StringCreate("Quit");
-	
+
 	readInput("test1.txt");
 	reset();
 	readInput("test2.txt");
