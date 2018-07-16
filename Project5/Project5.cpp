@@ -198,7 +198,17 @@ void intersectFromSet(Set* self, const Set* other) {
     int k = 0;
     int j = 0;
     for (int i = 0; i < self->len; i++) {
-        
+        if (j == other->len) {
+            break;
+        }
+        if (self->elements[i] == other->elements[j]) {
+            elements[k++] = self->elements[i];
+            count++;
+            j++;
+        } else if (self->elements[i] > other->elements[j]) {
+            j++;
+            i--;
+        }
     }
 
     free(self->elements);
