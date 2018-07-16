@@ -170,7 +170,16 @@ bool isEqualToSet(const Set* self, const Set* other) {
 
 /* return true if every element of self is also an element of other */
 bool isSubsetOf(const Set* self, const Set* other) {
-    
+    int j = 0;
+    for (int i = 0; i < other->len; i++) {
+        if (self->elements[j] < other->elements[i]) {
+            return false;
+        } else if (self->elements[j] == other->elements[i]) {
+            j++;
+        }
+    }
+
+    return true;
 }
 
 /* done for you */
