@@ -135,9 +135,9 @@ void insertSet(Set* self, int x) {
  */
 void removeSet(Set* self, int x) {
     int* elements = (int*) malloc(self->len * sizeof(int));
-
+    int len = self-> len;
     int j = 0;
-    for (int i = 0; i < self->len; i++) {
+    for (int i = 0; i < len; i++) {
         if (x != self->elements[i]) {
             elements[j++] = self->elements[i];
         } else {
