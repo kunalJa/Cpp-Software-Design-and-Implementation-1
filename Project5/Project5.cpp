@@ -264,7 +264,7 @@ void unionInSet(Set* self, const Set* other) {
     int i = 0;
     int j = 0;
     for (int k = 0; k < self->len + other->len; k++) {
-        if (j > other->len) {
+        if (j >= other->len) {
             while (i < self->len) {
                 elements[k++] = self->elements[i++];
                 count++;
@@ -272,7 +272,7 @@ void unionInSet(Set* self, const Set* other) {
             break;
         }
 
-        if (i > self->len) {
+        if (i >= self->len) {
             while (j < other->len) {
                 elements[k++] = other->elements[j++];
                 count++;
