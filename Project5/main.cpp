@@ -24,7 +24,7 @@ int main (void) {
 	relationalTests();
 	algebraicTests();
 	testTime();
-	printf("The tests are over\n"); 
+	printf("The tests are over\n");
 }
 
 void randomSet(Set* s) {

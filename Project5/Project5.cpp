@@ -93,15 +93,28 @@ bool isMemberSet(const Set* self, int x) {
 void insertSet(Set* self, int x) {
     int* elements = (int*) malloc((self->len + 1) * sizeof(int));
 
-    int j = 0;
-    for (int i = 0; i < self->len; i++){
-        if (x == self->elements[i]) {
-            free(elements);
-            return;
-        } if (self->elements[i] > x && i != 0 && self->elements[i-1] < x) {
-            elements[j++] = x;
+    if (self->len == 0) {
+        elements[0] = x;
+    } else {
+        int j = 0;
+        bool changed = false;
+        for (int i = 0; i < self->len; i++){
+            if (x == self->elements[i]) {
+                free(elements);
+                return;
+            }
+
+            if (x < self->elements[i] && !changed) {
+                elements[j++] = x;
+                changed = true;
+            }
+
+            elements[j++] = self->elements[i];
+            if (i + 1 == self->len && !changed) {
+                elements[j] = x;
+                changed = true;
+            }
         }
-        elements[j++] = self->elements[i];
     }
 
     free(self->elements);
