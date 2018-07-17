@@ -231,13 +231,17 @@ void intersectFromSet(Set* self, const Set* other) {
 
 /* remove all elements from self that are also elements of other */
 void subtractFromSet(Set* self, const Set* other) {
+    if (other->len == 0) {
+        return;
+    }
+
     int* elements = (int*) malloc(self->len * sizeof(int));
     int count = 0;
 
     int k = 0;
     int j = 0;
     for (int i = 0; i < self->len; i++) {
-        if (j > other->len) {
+        if (j >= other->len) {
             elements[k++] = self->elements[i];
             count++;
         } else if (self->elements[i] < other->elements[j]) {
