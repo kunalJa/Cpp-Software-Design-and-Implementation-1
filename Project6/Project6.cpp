@@ -83,7 +83,18 @@ int minRec2(int x[], int n) {
  * accuracy.
  */
 double sqrtIt(double x, double low_guess, double high_guess) {
-	return 0;
+    double guess = low_guess + ((high_guess - low_guess) / 2);
+    while (high_guess - low_guess > 0.000000000000001) {
+        if (guess * guess > x) {
+            high_guess = guess;
+        } else {
+            low_guess = guess;
+        }
+
+        guess = low_guess + ((high_guess - low_guess) / 2);
+    }
+
+    return  guess;
 }
 
 /*
@@ -99,7 +110,21 @@ double sqrtIt(double x, double low_guess, double high_guess) {
  * accuracy.
  */
 double sqrtRec(double x, double low_guess, double high_guess) {
-	return 0;
+	double guess = low_guess + ((high_guess - low_guess) / 2);
+
+	// Base case, when our guesses are numbers within 10^-15 of each other
+	// They are accurate enough
+	if (high_guess - low_guess <= 0.000000000000001) {
+	    return guess;
+	}
+
+    // "Searching for the square root can be done much like searching
+    // for a name in a phone book" I.E do binary search
+	if (guess * guess < x) {
+        return sqrtRec(x, guess, high_guess);
+	} else {
+	    return sqrtRec(x, low_guess, guess);
+	}
 }
 
 
@@ -118,7 +143,21 @@ double sqrtRec(double x, double low_guess, double high_guess) {
  */
 
 int strCompare(char* str1, char* str2) {
-	return 0;
+    if (*str1 == 0 && *str2 != 0) {
+        return -1;
+    } else if (*str2 == 0 && *str1 != 0) {
+        return 1;
+    } else if (*str1 == 0 && *str2 == 0) {
+        return 0;
+    }
+
+	if (*str1 < *str2) {
+	    return -1;
+	} else if (*str1 > *str2) {
+	    return 1;
+	} else {
+	    return strCompare(str1 + 1, str2 + 1);
+	}
 }
 
 /*
@@ -144,7 +183,32 @@ int whatLetter(char c) {
  * once again, you can only use recursion, no loops
  */
 int strCompare2(char* str1, char* str2) {
-	return 0;
+    int what1 = whatLetter(*str1);
+    int what2 = whatLetter(*str2);
+
+    if (what1 == -1) {
+        return strCompare2(str1 + 1, str2);
+    }
+
+    if (what2 == -1) {
+        return strCompare2(str1, str2 + 1);
+    }
+
+    if (*str1 == 0 && *str2 != 0) {
+        return -1;
+    } else if (*str2 == 0 && *str1 != 0) {
+        return 1;
+    } else if (*str1 == 0 && *str2 == 0) {
+        return 0;
+    }
+
+	if (what1 < what2) {
+        return -1;
+	} else if (what2 < what1) {
+        return 1;
+    } else {
+        return strCompare2(str1 + 1, str2 + 1);
+    }
 }
 
 

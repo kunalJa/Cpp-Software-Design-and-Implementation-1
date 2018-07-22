@@ -235,7 +235,7 @@ int main(void) {
 	printf("now the smallest is %d\n", minIt(a, 10));
 	printf("now the smallest is %d\n", minRec1(a, 10));
 	printf("now the smallest is %d\n", minRec2(a, 10));
-	
+
 	/* test sqrt */
 	printf("the sqrt of 25 is %g\n", sqrtIt(25.0, 0, 25.0));
 	printf("the sqrt of 26 is %g\n", sqrtIt(26.0, 0, 26.0));
