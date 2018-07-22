@@ -186,6 +186,22 @@ int strCompare2(char* str1, char* str2) {
     int what1 = whatLetter(*str1);
     int what2 = whatLetter(*str2);
 
+    if (*str1 == 0 && *str2 != 0) {
+        if (what2 == -1) {
+            return strCompare2(str1, str2 + 1);
+        } else {
+            return -1;
+        }
+    } else if (*str2 == 0 && *str1 != 0) {
+        if (what1 == -1) {
+            return strCompare2(str1 + 1, str2);
+        } else {
+            return 1;
+        }
+    } else if (*str1 == 0 && *str2 == 0) {
+        return 0;
+    }
+
     if (what1 == -1) {
         return strCompare2(str1 + 1, str2);
     }
@@ -194,17 +210,9 @@ int strCompare2(char* str1, char* str2) {
         return strCompare2(str1, str2 + 1);
     }
 
-    if (*str1 == 0 && *str2 != 0) {
+    if (what1 < what2) {
         return -1;
-    } else if (*str2 == 0 && *str1 != 0) {
-        return 1;
-    } else if (*str1 == 0 && *str2 == 0) {
-        return 0;
-    }
-
-	if (what1 < what2) {
-        return -1;
-	} else if (what2 < what1) {
+    } else if (what1 > what2) {
         return 1;
     } else {
         return strCompare2(str1 + 1, str2 + 1);

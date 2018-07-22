@@ -317,6 +317,13 @@ int main(void) {
 		printf("oops, \"%s\" should be greater than \"%s\"\n", s1, s2);
 	}
 
+    s1 = ""; s2 = "!!";
+    if (strCompare2(s1, s2) == 0) {
+        printf("\"%s\" is equal to \"%s\", very good\n", s1, s2);
+    } else {
+        printf("oops, \"%s\" should be greater than \"%s\"\n", s1, s2);
+    }
+
 	/* test maze */		
 	srand(magic_number);
 	makeMaze();
