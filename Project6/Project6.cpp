@@ -454,8 +454,25 @@ void solveMazeIt(int row, int col) {
 	int dir = 2; // 0 is up, 1 is right, 2 is down, 3 is left.
 	maze[row][col] = 2; // drop a bread crumb in the starting square
 	while (row < MATRIX_SIZE - 1) { // the exit is the only open square in the last row
-
+        return;
 	}
+}
+
+
+Martian minMartian(Martian m1, Martian m2, Martian m3) {
+    int sum1 = m1.pennies + m1.nicks + m1.dodeks;
+    int sum2 = m2.pennies + m2.nicks + m2.dodeks;
+    int sum3 = m3.pennies + m3.nicks + m3.dodeks;
+
+    if (sum1 < sum2 && sum1 < sum3) {
+        return m1;
+    } else if (sum2 < sum1 && sum2 < sum3) {
+        return m2;
+    } else if (sum3 < sum1 && sum3 < sum2){
+        return m3;
+    } else {
+        return m1;
+    }
 }
 
 
@@ -477,7 +494,30 @@ Martian change(int cents) {
  * martian change problem is just as easy as the concrete version 
  */
 Martian change(int cents, int nick_val, int dodek_val) {
-	return Martian{}; // delete this line, it's broken. Then write the function properly!
+	Martian m1 =  {0, 0, 0};
+    Martian m2 =  {0, 0, 0};
+    Martian m3 =  {0, 0, 0};
+
+    if (cents == 0) {
+        return m1;
+    }
+
+    if (cents >= 1) {
+        m3 = change(cents - 1, nick_val, dodek_val);
+        m3.pennies += 1;
+    }
+
+    if (cents >= nick_val) {
+        m1 = change(cents - nick_val, nick_val, dodek_val);
+        m1.nicks += 1;
+    }
+
+    if (cents >= dodek_val) {
+        m2 = change(cents - dodek_val, nick_val, dodek_val);
+        m2.dodeks += 1;
+    }
+
+    return minMartian(m1, m2, m3);
 }
 
 /* 

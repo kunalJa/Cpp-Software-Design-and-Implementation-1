@@ -361,5 +361,28 @@ int main(void) {
 	/* A very simple and obvious test of the general form of Martian
 	 * be sure and test your solution more thoroughly!!!! */
 	change4 = change(25, 5, 12);
-	printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n", change4.dodeks, change4.nicks, change4.pennies);
+	printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n\n", change4.dodeks, change4.nicks, change4.pennies);
+
+//    Martian change5;
+//    int cents;
+//    int nickel;
+//    int dodek;
+//    for (int i = 0; i< 50; i++) {
+//
+//        cents =  (rand() %100);
+//        nickel =  (rand() % 10);
+//        dodek = (rand() %100) / 10 +10;
+//
+//        if (dodek > 20) {(dodek % 10) + 10;}
+//
+//        if (nickel < 2)
+//        {
+//            nickel += 2;
+//        }
+//        change5 = change(cents, nickel, dodek);
+//        printf("change 5 inputs: %d cents, %d is nick val, %d is dodek val. Outputs: %dd %dn %dp\n", cents, nickel, dodek, change5.dodeks, change5.nicks, change5.pennies);
+//
+//    }
+//
+//    printf ("done");
 }
