@@ -329,7 +329,11 @@ int main(void) {
 	makeMaze();
 	recodeMaze();
 	printf("recursive solution to the maze\n");
-	solveMazeRec(0, start_col);	
+    printMaze();
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("%d\n", solveMazeRec(0, start_col));
 	printMaze();
 	printf("\n\n\n");
 	

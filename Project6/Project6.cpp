@@ -34,6 +34,7 @@ int minRec1(int x[], int n) {
         return x[0];
     }
 
+    // Compare first and last letters
     if (x[0] > x[n-1]) {
         return minRec1(x+1, n-1);
     } else {
@@ -50,12 +51,15 @@ int minRec1(int x[], int n) {
  */
 int minRec2(int x[], int n) {
     int half, left, right;
+    // Base case
     if (n <= 1) {
         return x[0];
     }
 
+    // Find min of left half and of right half
     half = n/2;
     left = minRec2(x, half);
+
     if (n%2 != 0) {
         right = minRec2(x + half, half + 1);
     } else {
@@ -83,8 +87,8 @@ int minRec2(int x[], int n) {
  * accuracy.
  */
 double sqrtIt(double x, double low_guess, double high_guess) {
-    double guess = low_guess + ((high_guess - low_guess) / 2);
-    while (high_guess - low_guess > 0.000000000000001) {
+    double guess = low_guess + ((high_guess - low_guess) / 2); // Binary search for sqrt
+    while (high_guess - low_guess > 0.000000000000001) { // Exit condition, our number is within 1^-15
         if (guess * guess > x) {
             high_guess = guess;
         } else {
@@ -112,7 +116,7 @@ double sqrtIt(double x, double low_guess, double high_guess) {
 double sqrtRec(double x, double low_guess, double high_guess) {
 	double guess = low_guess + ((high_guess - low_guess) / 2);
 
-	// Base case, when our guesses are numbers within 10^-15 of each other
+	// Base case, when our guesses are numbers within 1^-15 of each other
 	// They are accurate enough
 	if (high_guess - low_guess <= 0.000000000000001) {
 	    return guess;
@@ -143,6 +147,7 @@ double sqrtRec(double x, double low_guess, double high_guess) {
  */
 
 int strCompare(char* str1, char* str2) {
+    // Ensure lengths are taken into account for string comparison
     if (*str1 == 0 && *str2 != 0) {
         return -1;
     } else if (*str2 == 0 && *str1 != 0) {
@@ -187,6 +192,7 @@ int strCompare2(char* str1, char* str2) {
     int what2 = whatLetter(*str2);
 
     if (*str1 == 0 && *str2 != 0) {
+        //Make sure that if one is at the end, the other doesn't still have non-chars
         if (what2 == -1) {
             return strCompare2(str1, str2 + 1);
         } else {
@@ -265,7 +271,7 @@ int strCompare2(char* str1, char* str2) {
  *
  * If you're trying to see if you can find an exit from some square, and all 
  * the adjacent squares are either walls, or have bread crumbs in them, then
- * you already know the answer -- "you can't get to the exit from here". 
+ * you already know the answer -- "you can't get to the exit from here".
  * Pick up your bread crumb and return false.
  * 
  * You can set the value of the current square to "2" to indicate that a bread
@@ -279,6 +285,55 @@ int strCompare2(char* str1, char* str2) {
  */
 
 int solveMazeRec(int row, int col) {
+    int u = 0, d = 0, l = 0, r = 0;
+    int temp = maze[row][col];
+
+    if (maze[row][col] == 0 && row == MATRIX_SIZE - 1) {
+        maze[row][col] = 2; // Bread Crumb for the last drop
+        return 1;
+    }
+
+    maze[row][col] = 2; // Bread Crumb
+    if (row > 0 && row < MATRIX_SIZE) { // Up
+	    if (maze[row - 1][col] == 0) {
+	        u = solveMazeRec(row - 1, col);
+	    }
+	    if (u == 1) {
+	        return u;
+	    }
+	}
+
+	if (row >= 0 && row < MATRIX_SIZE - 1) { // Down
+        if (maze[row + 1][col] == 0) {
+            d = solveMazeRec(row + 1, col);
+        }
+
+        if (d == 1) {
+            return d;
+        }
+	}
+
+	if (col > 0 && col < MATRIX_SIZE) { // Left
+        if (maze[row][col - 1] == 0) {
+            l = solveMazeRec(row, col - 1);
+        }
+
+        if (l == 1) {
+            return  l;
+        }
+	}
+
+	if (col >= 0 && col < MATRIX_SIZE - 1) { // Right
+        if (maze[row][col + 1] == 0) {
+            r = solveMazeRec(row, col + 1);
+        }
+
+        if (r == 1) {
+            return r;
+        }
+	}
+
+    maze[row][col] = temp; // Pick bread crumb back up
 	return 0;
 }
 
