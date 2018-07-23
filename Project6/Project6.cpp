@@ -289,7 +289,7 @@ int solveMazeRec(int row, int col) {
     int temp = maze[row][col];
 
     if (maze[row][col] == 0 && row == MATRIX_SIZE - 1) {
-        maze[row][col] = 2; // Bread Crumb for the last drop
+        maze[row][col] = 2; // Bread Crumb for the last location on the map
         return 1;
     }
 
@@ -453,10 +453,7 @@ int turnLeft(int dir) {
 void solveMazeIt(int row, int col) {
 	int dir = 2; // 0 is up, 1 is right, 2 is down, 3 is left.
 	maze[row][col] = 2; // drop a bread crumb in the starting square
-	while (row < MATRIX_SIZE - 1) { // the exit is the only open square 
-				// in the last row
-
-		/* the rest of this loop is yours */
+	while (row < MATRIX_SIZE - 1) { // the exit is the only open square in the last row
 
 	}
 }
