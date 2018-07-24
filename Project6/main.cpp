@@ -356,33 +356,43 @@ int main(void) {
 	printf("change 3 should be 1d, 1n, 0p and is: %dd %dn %dp\n", change3.dodeks, change3.nicks, change3.pennies);
 
 	Martian change4 = change(25);
-	printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n", change4.dodeks, change4.nicks, change4.pennies);
+	printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n\n\n", change4.dodeks, change4.nicks, change4.pennies);
 
 	/* A very simple and obvious test of the general form of Martian
 	 * be sure and test your solution more thoroughly!!!! */
-	change4 = change(25, 5, 12);
-	printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n\n", change4.dodeks, change4.nicks, change4.pennies);
+    change1 = change(15, 5, 12);
+    printf("change 1 should be 0d, 3n, 0p and is: %dd %dn %dp\n", change1.dodeks, change1.nicks, change1.pennies);
 
-//    Martian change5;
-//    int cents;
-//    int nickel;
-//    int dodek;
-//    for (int i = 0; i< 50; i++) {
-//
-//        cents =  (rand() %100);
-//        nickel =  (rand() % 10);
-//        dodek = (rand() %100) / 10 +10;
-//
-//        if (dodek > 20) {(dodek % 10) + 10;}
-//
-//        if (nickel < 2)
-//        {
-//            nickel += 2;
-//        }
-//        change5 = change(cents, nickel, dodek);
-//        printf("change 5 inputs: %d cents, %d is nick val, %d is dodek val. Outputs: %dd %dn %dp\n", cents, nickel, dodek, change5.dodeks, change5.nicks, change5.pennies);
-//
-//    }
-//
-//    printf ("done");
+    change2 = change(0, 5, 12);
+    printf("change 2 should be 0d, 0n, 0p and is: %dd %dn %dp\n", change2.dodeks, change2.nicks, change2.pennies);
+
+    change3 = change(17, 5 , 12);
+    printf("change 3 should be 1d, 1n, 0p and is: %dd %dn %dp\n", change3.dodeks, change3.nicks, change3.pennies);
+
+    change4 = change(25, 5, 12);
+    printf("change 4 should be 2d, 0n, 1p and is: %dd %dn %dp\n\n\n", change4.dodeks, change4.nicks, change4.pennies);
+
+
+    Martian change5;
+    int cents;
+    int nickel;
+    int dodek;
+    for (int i = 0; i< 50; i++) {
+
+        cents =  (rand() % 50);
+        nickel =  (rand() % 10);
+        dodek = (rand() % 100) / 10 + 10;
+
+        if (dodek > 20) {(dodek % 10) + 10;}
+
+        if (nickel < 2)
+        {
+            nickel += 2;
+        }
+        change5 = change(cents, nickel, dodek);
+        printf("change 5 inputs: %d cents, %d is nick val, %d is dodek val. Outputs: %dd %dn %dp\n", cents, nickel, dodek, change5.dodeks, change5.nicks, change5.pennies);
+
+    }
+
+    printf ("done");
 }

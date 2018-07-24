@@ -451,27 +451,61 @@ int turnLeft(int dir) {
  * You indicate "bread crumbs" by setting the square equal to "2"
  */
 void solveMazeIt(int row, int col) {
-	int dir = 2; // 0 is up, 1 is right, 2 is down, 3 is left.
-	maze[row][col] = 2; // drop a bread crumb in the starting square
-	while (row < MATRIX_SIZE - 1) { // the exit is the only open square in the last row
-        return;
-	}
+    int dir = 2; // 0 is up, 1 is right, 2 is down, 3 is left.
+    maze[row][col] = 2; // drop a bread crumb in the starting square
+    while (row < MATRIX_SIZE - 1) { // the exit is the only open square
+        // in the last row
+
+        /* the rest of this loop is yours */
+
+    }
 }
 
 
 Martian minMartian(Martian m1, Martian m2, Martian m3) {
+    // Number of coins in each martian
     int sum1 = m1.pennies + m1.nicks + m1.dodeks;
     int sum2 = m2.pennies + m2.nicks + m2.dodeks;
     int sum3 = m3.pennies + m3.nicks + m3.dodeks;
 
-    if (sum1 < sum2 && sum1 < sum3) {
-        return m1;
-    } else if (sum2 < sum1 && sum2 < sum3) {
-        return m2;
-    } else if (sum3 < sum1 && sum3 < sum2){
-        return m3;
+    // We should not include martians who do not have any coins
+    // Find the minimum
+    if (sum1 != 0 && sum2 != 0 && sum3 != 0){
+        if (sum1 <= sum2 && sum1 <= sum3) {
+            return m1;
+        } else if (sum2 <= sum1 && sum2 <= sum3) {
+            return m2;
+        } else if (sum3 <= sum1 && sum3 <= sum2){
+            return m3;
+        }
     } else {
-        return m1;
+        if (sum1 == 0 && sum2 == 0) {
+                return m3;
+        } else if (sum1 == 0 && sum3 == 0) {
+            return m2;
+        } else if (sum2 == 0 && sum3 == 0) {
+            return m1;
+        } else {
+            if (sum1 == 0) {
+                if (sum2 <= sum3) {
+                    return m2;
+                } else {
+                    return m3;
+                }
+            } else if (sum2 == 0) {
+                if (sum1 <= sum3) {
+                    return m1;
+                } else {
+                    return m3;
+                }
+            } else if (sum3 == 0) {
+                if (sum1 <= sum2) {
+                    return m1;
+                } else {
+                    return m2;
+                }
+            }
+        }
     }
 }
 
@@ -482,7 +516,46 @@ Martian minMartian(Martian m1, Martian m2, Martian m3) {
  * this optimal collection of coins.
  */
 Martian change(int cents) {
-	return Martian{}; // delete this line, it's broken. Then write the function properly!
+    // Find every combination of coins that add up to cents
+    Martian m1 =  {0, 0, 0}; // If we subtracted a 12 first
+    Martian m2 =  {0, 0, 0}; // If we subtracted a 5 first
+    Martian m3 =  {0, 0, 0}; // If we subtracted a penny first
+
+    // This line ensures that minMartian shouldn't count martians that have 0 coins
+    // when trying to find the minimum number of coins used to get the sum
+    // Base Case
+    if (cents < 1) {
+        return m1;
+    }
+
+    // Subtract 12 from cents if possible
+    // If not possible, m1 will be 0- which is why we check for 0 in minMartian
+    if (cents >= 12) {
+        m1 = change(cents - 12);
+        m1.dodeks += 1;
+    }
+
+    // Subtract nick from cents if possible
+    // If not possible, m2 will be 0- which is why we check for 0 in minMartian
+    if (cents >= 5) {
+        m2 = change(cents - 5);
+        m2.nicks += 1;
+    }
+
+
+    // Subtract 1 from cents if possible
+    // If not possible, m3 will be 0- which is why we check for 0 in minMartian
+    if (cents >= 1) {
+        if (cents < 5 /*&& cents < 12*/ ) { // Small optimization so it doesn't just call this function a bunch
+            m3.pennies = cents;
+            return m3;
+        } else {
+            m3 = change(cents - 1);
+            m3.pennies += 1;
+        }
+    }
+
+    return minMartian(m1, m2, m3); // Return the martian with the smallest number of coins used to make the total
 }
 
 /*
@@ -494,30 +567,46 @@ Martian change(int cents) {
  * martian change problem is just as easy as the concrete version 
  */
 Martian change(int cents, int nick_val, int dodek_val) {
-	Martian m1 =  {0, 0, 0};
-    Martian m2 =  {0, 0, 0};
-    Martian m3 =  {0, 0, 0};
+    // Find every combination of coins that add up to cents
+	Martian m1 =  {0, 0, 0}; // If we subtracted a dodek first
+    Martian m2 =  {0, 0, 0}; // If we subtracted a nick first
+    Martian m3 =  {0, 0, 0}; // If we subtracted a penny first
 
-    if (cents == 0) {
+    // This line ensures that minMartian shouldn't count martians that have 0 coins
+    // when trying to find the minimum number of coins used to get the sum
+    // Base Case
+    if (cents < 1) {
         return m1;
     }
 
-    if (cents >= 1) {
-        m3 = change(cents - 1, nick_val, dodek_val);
-        m3.pennies += 1;
-    }
-
-    if (cents >= nick_val) {
-        m1 = change(cents - nick_val, nick_val, dodek_val);
-        m1.nicks += 1;
-    }
-
+    // Subtract dodek from cents if possible
+    // If not possible, m1 will be 0- which is why we check for 0 in minMartian
     if (cents >= dodek_val) {
-        m2 = change(cents - dodek_val, nick_val, dodek_val);
-        m2.dodeks += 1;
+        m1 = change(cents - dodek_val, nick_val, dodek_val);
+        m1.dodeks += 1;
     }
 
-    return minMartian(m1, m2, m3);
+    // Subtract nick from cents if possible
+    // If not possible, m2 will be 0- which is why we check for 0 in minMartian
+    if (cents >= nick_val) {
+        m2 = change(cents - nick_val, nick_val, dodek_val);
+        m2.nicks += 1;
+    }
+
+
+    // Subtract 1 from cents if possible
+    // If not possible, m3 will be 0- which is why we check for 0 in minMartian
+    if (cents >= 1) {
+        if (cents < nick_val && cents < dodek_val) { // Small optimization so it doesn't just call this function a bunch
+            m3.pennies = cents;
+            return m3;
+        } else {
+            m3 = change(cents - 1, nick_val, dodek_val);
+            m3.pennies += 1;
+        }
+    }
+
+    return minMartian(m1, m2, m3); // Return the martian with the smallest number of coins used to make the total
 }
 
 /* 
