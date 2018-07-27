@@ -46,8 +46,16 @@ Customer& CustomerDB::operator[](int k) { // done, please do not edit
 	return this->data[k];
 }
 
-Customer& CustomerDB::operator[](String name) { // not done, your effort goes here
+Customer& CustomerDB::operator[](String name) {
+    
 }
 
-bool CustomerDB::isMember(String name) { // not done, your effort goes here
+bool CustomerDB::isMember(String name) {
+	for (int i = 0; i < this->length; i++) {
+		if (this->data[i].name == name) {
+			return true;
+		}
+	}
+
+	return false;
 }
