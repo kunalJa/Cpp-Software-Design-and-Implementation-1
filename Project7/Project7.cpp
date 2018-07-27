@@ -107,9 +107,8 @@ void processPurchase() {
         if (itemAmount > amountInStock) {
             printf("Sorry %s, we only have %d %s\n", name.c_str(), amountInStock, itemName.c_str());
         } else {
-            Customer current = database[name];
             *(selectInventItem(itemName)) -= itemAmount;
-            *(selectInventItem(itemName, current)) += itemAmount;
+            *(selectInventItem(itemName, database[name])) += itemAmount;
         }
     }
 }
@@ -125,19 +124,19 @@ void processSummarize() {
     if (maxBottles == 0) {
         printf("no one has purchased any Bottles\n");
     } else {
-        printf("%s has purchased the most Bottles (%d)\n", maxBottles->name, maxBottles->bottles);
+        printf("%s has purchased the most Bottles (%d)\n", maxBottles->name.c_str(), maxBottles->bottles);
     }
 
     if (maxDiapers == 0) {
         printf("no one has purchased any Diapers\n");
     } else {
-        printf("%s has purchased the most Diapers (%d)\n", maxDiapers->name, maxDiapers->bottles);
+        printf("%s has purchased the most Diapers (%d)\n", maxDiapers->name.c_str(), maxDiapers->diapers);
     }
 
     if (maxRattles == 0) {
         printf("no one has purchased any Rattles\n");
     } else {
-        printf("%s has purchased the most Rattles (%d)\n", maxRattles->name, maxRattles->bottles);
+        printf("%s has purchased the most Rattles (%d)\n", maxRattles->name.c_str(), maxRattles->rattles);
     }
 }
 
