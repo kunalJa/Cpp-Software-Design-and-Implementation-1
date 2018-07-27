@@ -47,7 +47,27 @@ Customer& CustomerDB::operator[](int k) { // done, please do not edit
 }
 
 Customer& CustomerDB::operator[](String name) {
-    
+    for (int i = 0; i < this->length; i++) {
+        if (this->data[i].name == name) {
+            return this->data[i];
+        }
+    }
+
+    if (this->length == this->capacity) {
+        this->capacity *= 2;
+        Customer* biggerData = new Customer[capacity];
+        for (int i = 0; i < this->length; i++) {
+            biggerData[i] = this->data[i]; // Copy over old data (i wonder if i will need to do this manually?
+        }
+
+        delete[] this->data;
+        this->data = biggerData;
+    }
+
+    this->data[this->length] = Customer(name);
+    this->length++;
+
+    return this->data[this->length - 1];
 }
 
 bool CustomerDB::isMember(String name) {
