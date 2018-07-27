@@ -55,18 +55,16 @@ Customer& CustomerDB::operator[](String name) {
 
     if (this->length == this->capacity) {
         this->capacity *= 2;
-        Customer* biggerData = new Customer[capacity];
-        for (int i = 0; i < this->length; i++) {
-            biggerData[i] = this->data[i]; // Copy over old data (i wonder if i will need to do this manually?
+        Customer* biggerData = new Customer[this->capacity];
+        for (int j = 0; j < this->length; j++) {
+            biggerData[j] = this->data[j]; // Copy over old data (i wonder if i will need to do this manually?
         }
 
         delete[] this->data;
         this->data = biggerData;
     }
 
-    this->data[this->length] = Customer(name);
-    this->length++;
-
+    this->data[this->length++] = Customer(name);
     return this->data[this->length - 1];
 }
 
