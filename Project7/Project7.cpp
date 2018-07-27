@@ -95,10 +95,50 @@ Customer* findMax(String type) {
 }
 
 void processPurchase() {
-    
+    String name;
+    String itemName;
+    int itemAmount;
+    readString(name);
+    readString(itemName);
+    readNum(itemAmount);
+
+    if (itemAmount > 0) {
+        int amountInStock = *(selectInventItem(itemName));
+        if (itemAmount > amountInStock) {
+            printf("Sorry %s, we only have %d %s\n", name.c_str(), amountInStock, itemName.c_str());
+        } else {
+            Customer current = database[name];
+            *(selectInventItem(itemName)) -= itemAmount;
+            *(selectInventItem(itemName, current)) += itemAmount;
+        }
+    }
 }
 
 void processSummarize() {
+    printf("There are %d Bottles, %d Diapers and %d Rattles in inventory\n", num_bottles, num_diapers, num_rattles);
+    printf("we have had a total of %d different customers\n", database.size());
+
+    Customer* maxBottles = findMax("Bottles");
+    Customer* maxDiapers = findMax("Diapers");
+    Customer* maxRattles = findMax("Rattles");
+
+    if (maxBottles == 0) {
+        printf("no one has purchased any Bottles\n");
+    } else {
+        printf("%s has purchased the most Bottles (%d)\n", maxBottles->name, maxBottles->bottles);
+    }
+
+    if (maxDiapers == 0) {
+        printf("no one has purchased any Diapers\n");
+    } else {
+        printf("%s has purchased the most Diapers (%d)\n", maxDiapers->name, maxDiapers->bottles);
+    }
+
+    if (maxRattles == 0) {
+        printf("no one has purchased any Rattles\n");
+    } else {
+        printf("%s has purchased the most Rattles (%d)\n", maxRattles->name, maxRattles->bottles);
+    }
 }
 
 void processInventory() {
