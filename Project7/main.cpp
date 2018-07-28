@@ -89,5 +89,13 @@ int main(void) {
 	reset();
 	readInput("test3.txt");
 	reset();
+    readInput("test4.txt");
+    reset();
+    readInput("test5.txt");
+    reset();
+    readInput("test6.txt");
+    reset();
+    readInput("test7.txt");
+    reset();
     return 0;
 }
