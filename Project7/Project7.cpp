@@ -6,6 +6,7 @@
  * EE 312, Summer 2018
  */
 
+#include <iostream>
 #include <stdio.h>
 #include "String.h"
 #include "Customer.h"
@@ -105,7 +106,8 @@ void processPurchase() {
     if (itemAmount > 0) {
         int amountInStock = *(selectInventItem(itemName));
         if (itemAmount > amountInStock) {
-            printf("Sorry %s, we only have %d %s\n", name.c_str(), amountInStock, itemName.c_str());
+            std::cout << "Sorry " << name.c_str() << ", we only have " << amountInStock << " " << itemName.c_str() << std::endl;
+//            printf("Sorry %s, we only have %d %s\n", name.c_str(), amountInStock, itemName.c_str());
         } else {
             *(selectInventItem(itemName)) -= itemAmount;
             *(selectInventItem(itemName, database[name])) += itemAmount;
@@ -114,29 +116,37 @@ void processPurchase() {
 }
 
 void processSummarize() {
-    printf("There are %d Bottles, %d Diapers and %d Rattles in inventory\n", num_bottles, num_diapers, num_rattles);
-    printf("we have had a total of %d different customers\n", database.size());
+    std::cout << "There are " << num_bottles << " Bottles, " << num_diapers << " Diapers and " << num_rattles << " Rattles in inventory" << std::endl;
+//    printf("There are %d Bottles, %d Diapers and %d Rattles in inventory\n", num_bottles, num_diapers, num_rattles);
+    std::cout << "we have had a total of " << database.size() << " different customers" << std::endl;
+//    printf("we have had a total of %d different customers\n", database.size());
 
     Customer* maxBottles = findMax("Bottles");
     Customer* maxDiapers = findMax("Diapers");
     Customer* maxRattles = findMax("Rattles");
 
     if (maxBottles == 0) {
-        printf("no one has purchased any Bottles\n");
+        std::cout << "no one has purchased any Bottles" << std::endl;
+//        printf("no one has purchased any Bottles\n");
     } else {
-        printf("%s has purchased the most Bottles (%d)\n", maxBottles->name.c_str(), maxBottles->bottles);
+        std::cout << maxBottles->name.c_str() << " has purchased the most Bottles (" << maxBottles->bottles << ")" << std::endl;
+//        printf("%s has purchased the most Bottles (%d)\n", maxBottles->name.c_str(), maxBottles->bottles);
     }
 
     if (maxDiapers == 0) {
-        printf("no one has purchased any Diapers\n");
+        std::cout << "no one has purchased any Diapers" << std::endl;
+//        printf("no one has purchased any Diapers\n");
     } else {
-        printf("%s has purchased the most Diapers (%d)\n", maxDiapers->name.c_str(), maxDiapers->diapers);
+        std::cout << maxDiapers->name.c_str() << " has purchased the most Diapers (" << maxDiapers->diapers << ")" << std::endl;
+//        printf("%s has purchased the most Diapers (%d)\n", maxDiapers->name.c_str(), maxDiapers->diapers);
     }
 
     if (maxRattles == 0) {
-        printf("no one has purchased any Rattles\n");
+        std::cout << "no one has purchased any Rattles" << std::endl;
+//        printf("no one has purchased any Rattles\n");
     } else {
-        printf("%s has purchased the most Rattles (%d)\n", maxRattles->name.c_str(), maxRattles->rattles);
+        std::cout << maxRattles->name.c_str() << " has purchased the most Rattles (" << maxRattles->rattles << ")" << std::endl;
+//        printf("%s has purchased the most Rattles (%d)\n", maxRattles->name.c_str(), maxRattles->rattles);
     }
 }
 
