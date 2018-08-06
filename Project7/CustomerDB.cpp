@@ -1,8 +1,9 @@
 /*
- * Name:
- * EID:
+ * Name: Kunal Jain
+ * EID: ksj572
+ * slip days: 0
  * Project 7, CRM part 2
- * EE 312, Spring 2017
+ * EE 312, Summer 2018
  */
 #include <iostream>
 #include <cassert>
