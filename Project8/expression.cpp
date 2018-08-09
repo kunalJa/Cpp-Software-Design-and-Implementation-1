@@ -60,7 +60,7 @@ int expression::operateOn(const std::string& Operator, const int& arg1, const in
     }
 }
 
-exprNode* expression::add(exprNode* root, std::vector<expNode*> & expr) {
+exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
     exprNode* first = expr[0];
     expr.erase(expr.begin());
     root = first;
@@ -69,8 +69,7 @@ exprNode* expression::add(exprNode* root, std::vector<expNode*> & expr) {
         if(isBinary(first->operatorType)) {
             root->right = add(root->right, expr);
         } else {
-            root->right = new exprNode;
-            root->right->isOperand = true;
+            root->right = new exprNode(true, 0, '\0');
         }
     }
 
@@ -95,7 +94,7 @@ expression::~expression() {
     destroy(this->root);
 }
 
-expression::expression(std::vector<expNode*>& exp) {
+expression::expression(std::vector<exprNode*>& exp) {
     root = add(this->root, exp);
 }
 

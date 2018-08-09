@@ -8,25 +8,34 @@
 #include <string>
 #include <vector>
 
-typedef struct expNode {
+class exprNode {
+public:
     std::string operatorType;
     int operand;
     bool isOperand;
-    struct expNode* left;
-    struct expNode* right;
-} exprNode;
+    exprNode* left;
+    exprNode* right;
+
+    exprNode(bool isOperand, int operand, char optr) {
+        left = nullptr;
+        right = nullptr;
+        this->isOperand = isOperand;
+        this->operand = operand;
+        this->operatorType = optr;
+    }
+};
 
 class expression {
 private:
     exprNode* root;
     int parse(exprNode*);
     void destroy(exprNode*);
-    exprNode* add(exprNode*, std::vector<expNode*>&);
+    exprNode* add(exprNode*, std::vector<exprNode*>&);
     bool isBinary(const std::string&);
     int operateOn(const std::string&, const int&, const int&);
 public:
     expression();
-    expression(std::vector<expNode*>&);
+    expression(std::vector<exprNode*>&);
     ~expression();
     int parse();
 };
