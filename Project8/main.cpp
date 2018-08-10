@@ -34,11 +34,11 @@ void run() {
                     }
 
                     if (next_token_type == NUMBER) {
-                        expr.push_back(new exprNode(true, token_number_value, false, "\0", "\0"));
+                        expr.push_back(new exprNode(true, token_number_value, false, "", ""));
                     } else if (next_token_type == SYMBOL) {
-                        expr.push_back(new exprNode(false, 0, false, "\0", string(next_token())));
+                        expr.push_back(new exprNode(false, 0, false, "", string(next_token())));
                     } else if (next_token_type == NAME) {
-                        expr.push_back(new exprNode(true, 0, true, string(next_token()), "\0"));
+                        expr.push_back(new exprNode(true, 0, true, string(next_token()), ""));
                     }
                     peek_next_token();
                 }

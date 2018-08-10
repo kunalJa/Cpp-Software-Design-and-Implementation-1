@@ -7,14 +7,6 @@
 #include <map>
 #include "expression.h"
 
-void exprNode::destroy(exprNode* rootptr) {
-    if (rootptr) {
-        destroy(rootptr->left);
-        destroy(rootptr->right);
-        delete rootptr;
-    }
-}
-
 bool expression::isBinary(const std::string& Operator) {
     if (Operator == "!") {
         return false;
@@ -72,14 +64,14 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
         if(isBinary(first->operatorType)) {
             root->right = add(root->right, expr);
         } else {
-            root->right = new exprNode(true, 0, false, "\0", "\0");
+            root->right = new exprNode(true, 0, false, "", "");
         }
     }
 
     return root;
 }
 
-int expression::parse(exprNode* root, std::vector<std::map<std::string, int>>& symb) {
+int expression::parse(exprNode* root, std::vector<std::map<std::string, int>>& symb) const {
     if(root->isOperand) {
         if (root->isSymbol) {
             return symb[0][root->var];
@@ -97,20 +89,16 @@ expression::expression() {
     this->root = nullptr;
 }
 
-expression::~expression() {
-    delete this->root;
-}
-
 expression::expression(std::vector<exprNode*>& exp) {
     this->root = add(this->root, exp);
 }
 
-int expression::parse(std::vector<std::map<std::string, int>>& symb) {
-    return parse(root, symb);
-}
-
 expression::expression(const expression& other) {
     this->root = new exprNode(*other.root);
+}
+
+expression::~expression() {
+    delete this->root;
 }
 
 expression& expression::operator=(const expression& other) {
@@ -120,4 +108,8 @@ expression& expression::operator=(const expression& other) {
     }
 
     return *this;
+}
+
+int expression::parse(std::vector<std::map<std::string, int>>& symb) {
+    return parse(this->root, symb);
 }
