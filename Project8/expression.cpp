@@ -2,7 +2,13 @@
 // Created by kunal on 8/6/18.
 //
 
+#include <string>
+#include <vector>
+#include <map>
 #include "expression.h"
+
+extern std::vector<std::map<std::string, int>*> symbols;
+extern int currentScope;
 
 void expression::destroy(exprNode* rootptr) {
     if (rootptr) {
@@ -69,7 +75,7 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
         if(isBinary(first->operatorType)) {
             root->right = add(root->right, expr);
         } else {
-            root->right = new exprNode(true, 0, "");
+            root->right = new exprNode(true, 0, false, "", "");
         }
     }
 
@@ -78,6 +84,10 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
 
 int expression::parse(exprNode* root) {
     if(root->isOperand) {
+        if (root->isSymbol) {
+            //return (*symbols[currentScope])[root->var];
+        }
+
         return root->operand;
     }
 

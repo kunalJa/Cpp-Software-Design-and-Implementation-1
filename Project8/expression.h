@@ -11,17 +11,21 @@
 class exprNode {
 public:
     std::string operatorType;
+    std::string var;
     int operand;
     bool isOperand;
+    bool isSymbol;
     exprNode* left;
     exprNode* right;
 
-    exprNode(bool isOperand, int operand, std::string optr) {
+    exprNode(bool isOperand, int operand, bool isSymbol, std::string variable, std::string optr) {
         left = nullptr;
         right = nullptr;
         this->isOperand = isOperand;
         this->operand = operand;
         this->operatorType = optr;
+        this->var = variable;
+        this->isSymbol = isSymbol;
     }
 };
 
