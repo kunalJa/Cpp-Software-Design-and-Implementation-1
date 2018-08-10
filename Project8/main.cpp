@@ -60,6 +60,27 @@ void run() {
         read_next_token();
     }
 
+    for (int i = 0; i < commands.size(); i++) {
+        string currentCommand = commands[i]->currentCommand;
+        if (currentCommand == "text") {
+            cout << commands[i]->text;
+        } else if (currentCommand == "output") {
+            cout << commands[i]->output.parse(symbols);
+        } else if (currentCommand == "var") {
+            if (symbols[0].count(commands[i]->text) != 0) {
+                cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
+            }
+            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
+
+        } else if (currentCommand == "set") {
+            if (symbols[0].count(commands[i]->text) == 0) {
+                cout << "variable " << commands[i]->text << " not declared" << endl;
+            }
+
+            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
+        }
+    }
+
 }
 
 void dummy() {
@@ -79,6 +100,17 @@ void dummy() {
 
 int main() {
     set_input("test_grader.blip");
+    run();
+
+    cout << endl;
+
+    set_input("test2.blip");
+    run();
+
+    set_input("test3.blip");
+    run();
+
+    set_input("test4.blip");
     run();
 //    map<string, int> global;
 //    vector<map<string, int>> symbols; // vector for scope
