@@ -11,13 +11,14 @@
 
 class exprNode {
 public:
-    std::string operatorType;
-    std::string var;
-    int operand;
     bool isOperand;
+    int operand;
     bool isSymbol;
+    std::string var;
+    std::string operatorType;
     exprNode* left;
     exprNode* right;
+
     void destroy(exprNode*);
 
     exprNode(bool isOperand, int operand, bool isSymbol, std::string variable, std::string optr) {
@@ -41,7 +42,8 @@ public:
     }
 
     ~exprNode() {
-        destroy(this);
+        delete left;
+        delete right;
     }
 
     exprNode(const exprNode& other) {

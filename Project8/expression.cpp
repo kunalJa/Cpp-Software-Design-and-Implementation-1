@@ -7,9 +7,6 @@
 #include <map>
 #include "expression.h"
 
-extern std::vector<std::map<std::string, int>*> symbols;
-extern int currentScope;
-
 void exprNode::destroy(exprNode* rootptr) {
     if (rootptr) {
         destroy(rootptr->left);
@@ -101,7 +98,7 @@ expression::expression() {
 }
 
 expression::~expression() {
-    delete [] this->root;
+    delete this->root;
 }
 
 expression::expression(std::vector<exprNode*>& exp) {
@@ -118,7 +115,7 @@ expression::expression(const expression& other) {
 
 expression& expression::operator=(const expression& other) {
     if (this != &other) {
-        delete [] this->root;
+        delete this->root;
         this->root = new exprNode(*other.root);
     }
 

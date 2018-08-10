@@ -86,42 +86,13 @@ void run() {
 int main() {
     set_input("test_grader.blip");
     run();
-
+    cout << endl;
+    set_input("test2.blip");
+    run();
 //    cout << endl;
-
-//    set_input("test2.blip");
-//    run();
-
 //    set_input("test3.blip");
 //    run();
-//
+//    cout << endl;
 //    set_input("test4.blip");
 //    run();
-//    map<string, int> global;
-//    vector<map<string, int>> symbols; // vector for scope
-//    symbols.push_back(global);
-//    vector<command*> commands;
-//    int currentScope = 0;
-//    int commandCounter = 0;
-//    string a(" + + 2 3 ~ 4");
-//    const int size = 5;
-//    exprNode* nodes [size];
-//    symbols[0]["x"] = 10;
-//    nodes[0] = new exprNode(false, 0, false, "", "+");
-//    nodes[1] = new exprNode(false, 0, false, "", "&&");
-//    nodes[2] = new exprNode(true, 6, false, "", "");
-////    nodes[3] = new exprNode(true, 12, false, "", "");
-////    nodes[4] = new exprNode(true, 100, true, "x", "");
-////    nodes[5] = new exprNode(true, 4, false, "", '\0');
-////    nodes[6] = new exprNode(true, 5, false, "", '\0');
-//    vector<exprNode*> expr;
-//    for (int i = 0; i < size - 2; i++) { // add Nodes to expression expr
-//        expr.push_back(nodes[i]);
-//    }
-//    expr.push_back(new exprNode(true, 12, false, "", ""));
-//    expr.push_back(new exprNode(true, 100, true, "x", ""));
-//    cout << endl;
-//
-//    expression myTree(expr);
-//    cout << a << " = " << myTree.parse(symbols) << endl;
 }
