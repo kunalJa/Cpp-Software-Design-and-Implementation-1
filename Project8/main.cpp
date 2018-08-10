@@ -75,23 +75,24 @@ void run() {
         read_next_token();
     }
 
-    for (int i = 0; i < commands.size(); i++) {
-        string currentCommand = commands[i]->currentCommand;
+    for (vector<command*>::iterator it = commands.begin(); it != commands.end(); ++it) {
+        command* command = *it;
+        string currentCommand = command->currentCommand;
 
         if (currentCommand == "text") {
-            cout << commands[i]->text;
+            cout << command->text;
         } else if (currentCommand == "output") {
-            cout << commands[i]->output.parse(symbols);
+            cout << command->output.parse(symbols);
         } else if (currentCommand == "var") {
-            if (symbols[0].count(commands[i]->text) != 0) {
-                cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
+            if (symbols[0].count(command->text) != 0) {
+                cout << "variable " << command->text << " incorrectly re-initialized" << endl;
             }
-            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
+            symbols[0][command->text] = command->output.parse(symbols);
         } else if (currentCommand == "set") {
-            if (symbols[0].count(commands[i]->text) == 0) {
-                cout << "variable " << commands[i]->text << " not declared" << endl;
+            if (symbols[0].count(command->text) == 0) {
+                cout << "variable " << command->text << " not declared" << endl;
             }
-            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
+            symbols[0][command->text] = command->output.parse(symbols);
         }
     }
 }
