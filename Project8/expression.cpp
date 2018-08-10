@@ -69,7 +69,7 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
         if(isBinary(first->operatorType)) {
             root->right = add(root->right, expr);
         } else {
-            root->right = new exprNode(true, 0, '\0');
+            root->right = new exprNode(true, 0, "");
         }
     }
 

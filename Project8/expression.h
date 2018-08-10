@@ -16,7 +16,7 @@ public:
     exprNode* left;
     exprNode* right;
 
-    exprNode(bool isOperand, int operand, char optr) {
+    exprNode(bool isOperand, int operand, std::string optr) {
         left = nullptr;
         right = nullptr;
         this->isOperand = isOperand;
