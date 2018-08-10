@@ -82,17 +82,17 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
     return root;
 }
 
-int expression::parse(exprNode* root) {
+int expression::parse(exprNode* root, std::vector<std::map<std::string, int>>& symb) {
     if(root->isOperand) {
         if (root->isSymbol) {
-            //return (*symbols[currentScope])[root->var];
+            return symb[0][root->var];
         }
 
         return root->operand;
     }
 
-    int arg1 = parse(root->left);
-    int arg2 = parse(root->right); // For unary operators arg2 is a dummy variable
+    int arg1 = parse(root->left, symb);
+    int arg2 = parse(root->right, symb); // For unary operators arg2 is a dummy variable
     return operateOn(root->operatorType, arg1, arg2);
 }
 
@@ -108,6 +108,6 @@ expression::expression(std::vector<exprNode*>& exp) {
     root = add(this->root, exp);
 }
 
-int expression::parse() {
-    return parse(root);
+int expression::parse(std::vector<std::map<std::string, int>>& symb) {
+    return parse(root, symb);
 }

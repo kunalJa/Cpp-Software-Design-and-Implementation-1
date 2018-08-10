@@ -6,6 +6,7 @@
 #define PROJECT8_EXPRESSION_H
 
 #include <string>
+#include <map>
 #include <vector>
 
 class exprNode {
@@ -32,7 +33,7 @@ public:
 class expression {
 private:
     exprNode* root;
-    int parse(exprNode*);
+    int parse(exprNode*, std::vector<std::map<std::string, int>>&);
     void destroy(exprNode*);
     exprNode* add(exprNode*, std::vector<exprNode*>&);
     bool isBinary(const std::string&);
@@ -41,7 +42,7 @@ public:
     expression();
     expression(std::vector<exprNode*>&);
     ~expression();
-    int parse();
+    int parse(std::vector<std::map<std::string, int>>&);
 };
 
 
