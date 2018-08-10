@@ -54,8 +54,7 @@ void run() {
     read_next_token();
     while(next_token_type != END) {
         if (next_token_type == NAME) {
-            command* command1 = new command;
-            commands.push_back(command1);
+            commands.push_back(new command());
             commands[commandCounter]->currentCommand = next_token();
             if (commands[commandCounter]->currentCommand == "text") {
                 read_next_token();
@@ -94,6 +93,8 @@ void run() {
             }
             symbols[0][command->text] = command->output.parse(symbols);
         }
+
+        delete command;
     }
 }
 

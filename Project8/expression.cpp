@@ -59,30 +59,29 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
     exprNode* first = expr[0];
     expr.erase(expr.begin());
     root = first;
-    if (!(first->isOperand)) {
-        root->left = add(root->left, expr);
-        if(isBinary(first->operatorType)) {
-            root->right = add(root->right, expr);
+    if (!first->getIsOperand()) {
+        root->setLeft(add(root->getLeft(), expr));
+        if(isBinary(first->getOperatorType())) {
+            root->setRight(add(root->getRight(), expr));
         } else {
-            root->right = new exprNode(true, 0, false, "", "");
+            root->setRight(new exprNode(true, 0, false, "", ""));
         }
     }
-
     return root;
 }
 
 int expression::parse(exprNode* root, std::vector<std::map<std::string, int>>& symb) const {
-    if(root->isOperand) {
-        if (root->isSymbol) {
-            return symb[0][root->var];
+    if(root->getIsOperand()) {
+        if (root->getIsSymbol()) {
+            return symb[0][root->getVar()];
         }
 
-        return root->operand;
+        return root->getOperand();
     }
 
-    int arg1 = parse(root->left, symb);
-    int arg2 = parse(root->right, symb); // For unary operators arg2 is a dummy variable
-    return operateOn(root->operatorType, arg1, arg2);
+    int arg1 = parse(root->getLeft(), symb);
+    int arg2 = parse(root->getRight(), symb); // For unary operators arg2 is a dummy variable
+    return operateOn(root->getOperatorType(), arg1, arg2);
 }
 
 expression::expression() {

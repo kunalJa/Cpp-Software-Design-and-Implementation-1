@@ -11,6 +11,14 @@
 
 class exprNode {
 private:
+    bool isOperand;
+    int operand;
+    bool isSymbol;
+    std::string var;
+    std::string operatorType;
+    exprNode* left;
+    exprNode* right;
+
     void copy(const exprNode& other) {
         this->isOperand = other.isOperand;
         this->operand = other.operand;
@@ -31,13 +39,6 @@ private:
     }
 
 public:
-    bool isOperand;
-    int operand;
-    bool isSymbol;
-    std::string var;
-    std::string operatorType;
-    exprNode* left;
-    exprNode* right;
 
     exprNode(bool isOperand, int operand, bool isSymbol, std::string variable, std::string optr) {
         left = nullptr;
@@ -73,6 +74,42 @@ public:
         }
 
         return *this;
+    }
+
+    bool getIsOperand() {
+        return this->isOperand;
+    }
+
+    bool getIsSymbol() {
+        return this->isSymbol;
+    }
+
+    int getOperand() {
+        return this->operand;
+    }
+
+    std::string getVar() {
+        return this->var;
+    }
+
+    std::string getOperatorType() {
+        return this->operatorType;
+    }
+
+    exprNode* getLeft() {
+        return this->left;
+    }
+
+    exprNode* getRight() {
+        return this->right;
+    }
+
+    void setLeft(exprNode* other) {
+        this->left = other;
+    }
+
+    void setRight(exprNode* other) {
+        this->right = other;
     }
 };
 
