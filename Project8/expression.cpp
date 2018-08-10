@@ -10,7 +10,7 @@
 extern std::vector<std::map<std::string, int>*> symbols;
 extern int currentScope;
 
-void expression::destroy(exprNode* rootptr) {
+void exprNode::destroy(exprNode* rootptr) {
     if (rootptr) {
         destroy(rootptr->left);
         destroy(rootptr->right);
@@ -75,7 +75,7 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
         if(isBinary(first->operatorType)) {
             root->right = add(root->right, expr);
         } else {
-            root->right = new exprNode(true, 0, false, "", "");
+            root->right = new exprNode(true, 0, false, "\0", "\0");
         }
     }
 
@@ -101,13 +101,26 @@ expression::expression() {
 }
 
 expression::~expression() {
-    destroy(this->root);
+    delete [] this->root;
 }
 
 expression::expression(std::vector<exprNode*>& exp) {
-    root = add(this->root, exp);
+    this->root = add(this->root, exp);
 }
 
 int expression::parse(std::vector<std::map<std::string, int>>& symb) {
     return parse(root, symb);
+}
+
+expression::expression(const expression& other) {
+    this->root = new exprNode(*other.root);
+}
+
+expression& expression::operator=(const expression& other) {
+    if (this != &other) {
+        delete [] this->root;
+        this->root = new exprNode(*other.root);
+    }
+
+    return *this;
 }
