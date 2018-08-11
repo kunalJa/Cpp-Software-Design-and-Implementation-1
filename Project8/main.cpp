@@ -101,16 +101,7 @@ void run() {
     }
 }
 
-int main() {
+int main(void) {
     set_input("test_grader.blip");
-    run();
-    cout << endl;
-    set_input("test2.blip");
-    run();
-    cout << endl;
-    set_input("test3.blip");
-    run();
-    cout << endl;
-    set_input("test4.blip");
     run();
 }
