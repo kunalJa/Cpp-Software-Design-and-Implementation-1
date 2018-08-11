@@ -24,7 +24,7 @@ bool isNotCommand(const string& token) {
 void buildExpression(vector<command*>& commands, int& commandCounter) {
     peek_next_token();
     vector<exprNode*> expr;
-    while(isNotCommand(next_token())) {
+    while(isNotCommand(next_token()) && next_token_type != END) {
         read_next_token();
         if (next_token() == "//") {
             break;
