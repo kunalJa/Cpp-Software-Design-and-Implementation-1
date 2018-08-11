@@ -55,8 +55,9 @@ int expression::operateOn(const std::string& Operator, const int& arg1, const in
     }
 }
 
-exprNode* expression::add(exprNode* root, std::vector<exprNode*> & expr) {
-    exprNode* first = expr[0];
+exprNode* expression::add(exprNode* root, std::vector<exprNode*>& expr) {
+    exprNode* first = new exprNode(*expr[0]);
+    delete expr[0];
     expr.erase(expr.begin());
     root = first;
     if (!first->getIsOperand()) {

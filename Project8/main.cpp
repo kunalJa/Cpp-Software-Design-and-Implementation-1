@@ -22,11 +22,13 @@ bool isNotCommand(const string& token) {
 }
 
 void buildExpression(vector<command*>& commands, int& commandCounter) {
+    string token;
     peek_next_token();
     vector<exprNode*> expr;
     while(isNotCommand(next_token()) && next_token_type != END) {
         read_next_token();
-        if (next_token() == "//") {
+        token = next_token();
+        if (token == "//") {
             break;
         }
 
@@ -40,9 +42,7 @@ void buildExpression(vector<command*>& commands, int& commandCounter) {
         peek_next_token();
     }
 
-    if(next_token() != "//") {
-        commands[commandCounter]->output = expression(expr);
-    }
+    commands[commandCounter]->output = expression(expr);
 }
 
 void run() {
@@ -71,6 +71,9 @@ void run() {
             skip_line();
         }
 
+        if (string(next_token()) == "//") {
+            skip_line();
+        }
         read_next_token();
     }
 
