@@ -52,6 +52,7 @@ void run() {
     symbols.push_back(global);
     vector<command*> commands;
     int commandCounter = 0;
+
     read_next_token();
     while(next_token_type != END) {
         if (next_token_type == NAME) {
@@ -78,29 +79,29 @@ void run() {
         read_next_token();
     }
 
-    for (vector<command*>::iterator it = commands.begin(); it != commands.end(); ++it) {
-        command* command = *it;
-        string currentCommand = command->currentCommand;
-
+    int numCommands = commands.size();
+    for (int i = 0; i < numCommands; i++) {
+        string currentCommand = commands[i]->currentCommand;
         if (currentCommand == "text") {
-            cout << command->text;
+            cout << commands[i]->text;
         } else if (currentCommand == "output") {
-            cout << command->output.parse(symbols);
+            cout << commands[i]->output.parse(symbols);
         } else if (currentCommand == "var") {
-            if (symbols[0].count(command->text) != 0) {
-                cout << "variable " << command->text << " incorrectly re-initialized" << endl;
+            if (symbols[0].count(commands[i]->text) != 0) {
+                cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
             }
-            symbols[0][command->text] = command->output.parse(symbols);
+            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
         } else if (currentCommand == "set") {
-            if (symbols[0].count(command->text) == 0) {
-                cout << "variable " << command->text << " not declared" << endl;
+            if (symbols[0].count(commands[i]->text) == 0) {
+                cout << "variable " << commands[i]->text << " not declared" << endl;
             }
-            symbols[0][command->text] = command->output.parse(symbols);
+            symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
         }
 
-        delete command;
+        delete commands[i];
     }
 }
+
 
 int main(void) {
     set_input("test1.blip");
