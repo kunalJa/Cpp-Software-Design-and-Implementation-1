@@ -97,7 +97,9 @@ void run() {
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
         }
+    }
 
+    for (int i = 0; i < numCommands; i++) {
         delete commands[i];
     }
 }
