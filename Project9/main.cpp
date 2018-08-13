@@ -143,33 +143,6 @@ void run() {
 
 
 int main(void) {
-    set_input("test1.blip");
-    run();
-    cout << endl;
-    set_input("test2.blip");
-    run();
-    cout << endl;
-    set_input("test3.blip");
-    run();
-////    cout << endl;
-////    set_input("test4.blip");
-////    run();
-////    cout << endl;
-////    set_input("test5.blip");
-////    run();
-//    cout << endl;
-    set_input("test6.blip");
-    run();
-    cout << endl;
-    set_input("test7.blip");
-    run();
-//    cout << endl;
-//    set_input("test8.blip");
-//    run();
-//    cout << endl;
-//    set_input("test9.blip");
-//    run();
-//    cout << endl;
-    set_input("test10.blip");
+    set_input("test_grader.blip");
     run();
 }
