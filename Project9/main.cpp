@@ -1,4 +1,4 @@
-// Blip <Project8.cpp>
+// Blip <Project9.cpp>
 // EE 312 Project 8 submission by
 // Kunal Jain
 // ksj572
@@ -102,15 +102,30 @@ void run() {
 }
 
 int main(void) {
-    set_input("test_grader.blip");
+    set_input("test1.blip");
     run();
     cout << endl;
     set_input("test2.blip");
     run();
-    cout << endl;
-    set_input("test3.blip");
-    run();
-    cout << endl;
-    set_input("test4.blip");
-    run();
+//    cout << endl;
+//    set_input("test3.blip");
+//    run();
+//    cout << endl;
+//    set_input("test4.blip");
+//    run();
+//    cout << endl;
+//    set_input("test5.blip");
+//    run();
+//    cout << endl;
+//    set_input("test6.blip");
+//    run();
+//    cout << endl;
+//    set_input("test7.blip");
+//    run();
+//    cout << endl;
+//    set_input("test8.blip");
+//    run();
+//    cout << endl;
+//    set_input("test9.blip");
+//    run();
 }

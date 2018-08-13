@@ -7,7 +7,9 @@
 #include <map>
 #include "expression.h"
 
-bool expression::isBinary(const std::string& Operator) {
+using namespace std;
+
+bool expression::isBinary(const string& Operator) {
     if (Operator == "!") {
         return false;
     } else if (Operator == "~") {
@@ -17,7 +19,7 @@ bool expression::isBinary(const std::string& Operator) {
     return true;
 }
 
-int expression::operateOn(const std::string& Operator, const int& arg1, const int& arg2) {
+int expression::operateOn(const string& Operator, const int& arg1, const int& arg2) {
     if (isBinary(Operator)) {
         if (Operator == "+") {
             return arg1 + arg2;
@@ -55,7 +57,7 @@ int expression::operateOn(const std::string& Operator, const int& arg1, const in
     }
 }
 
-exprNode* expression::add(exprNode* root, std::vector<exprNode*>& expr) {
+exprNode* expression::add(exprNode* root, vector<exprNode*>& expr) {
     exprNode* first = new exprNode(*expr[0]);
     delete expr[0];
     expr.erase(expr.begin());
@@ -71,7 +73,7 @@ exprNode* expression::add(exprNode* root, std::vector<exprNode*>& expr) {
     return root;
 }
 
-int expression::parse(exprNode* root, std::vector<std::map<std::string, int>>& symb) const {
+int expression::parse(exprNode* root, vector<map<string, int>>& symb) const {
     if(root->getIsOperand()) {
         if (root->getIsSymbol()) {
             return symb[0][root->getVar()];
@@ -89,7 +91,7 @@ expression::expression() {
     this->root = nullptr;
 }
 
-expression::expression(std::vector<exprNode*>& exp) {
+expression::expression(vector<exprNode*>& exp) {
     this->root = add(this->root, exp);
 }
 
@@ -110,6 +112,6 @@ expression& expression::operator=(const expression& other) {
     return *this;
 }
 
-int expression::parse(std::vector<std::map<std::string, int>>& symb) {
+int expression::parse(vector<map<string, int>>& symb) {
     return parse(this->root, symb);
 }

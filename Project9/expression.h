@@ -9,13 +9,15 @@
 #include <map>
 #include <vector>
 
+using namespace std;
+
 class exprNode {
 private:
     bool isOperand;
     int operand;
     bool isSymbol;
-    std::string var;
-    std::string operatorType;
+    string var;
+    string operatorType;
     exprNode* left;
     exprNode* right;
 
@@ -88,11 +90,11 @@ public:
         return this->operand;
     }
 
-    std::string getVar() {
+    string getVar() {
         return this->var;
     }
 
-    std::string getOperatorType() {
+    string getOperatorType() {
         return this->operatorType;
     }
 
@@ -117,19 +119,19 @@ class expression {
 private:
     exprNode* root;
 
-    static bool isBinary(const std::string&);
-    static int operateOn(const std::string&, const int&, const int&);
-    exprNode* add(exprNode*, std::vector<exprNode*>&);
-    int parse(exprNode*, std::vector<std::map<std::string, int>>&) const;
+    static bool isBinary(const string&);
+    static int operateOn(const string&, const int&, const int&);
+    exprNode* add(exprNode*, vector<exprNode*>&);
+    int parse(exprNode*, vector<map<string, int>>&) const;
 
 public:
     expression(); // default constructor
-    explicit expression(std::vector<exprNode*>&); // vector of exprNode constructor
+    explicit expression(vector<exprNode*>&); // vector of exprNode constructor
     expression(const expression&); // copy constructor
     ~expression(); // destructor
     expression& operator=(const expression&);
 
-    int parse(std::vector<std::map<std::string, int>>&);
+    int parse(vector<map<string, int>>&);
 };
 
 
