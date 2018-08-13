@@ -6,8 +6,9 @@
 #define PROJECT8_EXPRESSION_H
 
 #include <string>
-#include <map>
 #include <vector>
+#include <list>
+#include <map>
 
 using namespace std;
 
@@ -121,12 +122,12 @@ private:
 
     static bool isBinary(const string&);
     static int operateOn(const string&, const int&, const int&);
-    exprNode* add(exprNode*, vector<exprNode*>&);
+    exprNode* add(exprNode*, list<exprNode*>&);
     int parse(exprNode*, vector<map<string, int>>&) const;
 
 public:
     expression(); // default constructor
-    explicit expression(vector<exprNode*>&); // vector of exprNode constructor
+    explicit expression(list<exprNode*>&); // list of exprNode constructor
     expression(const expression&); // copy constructor
     ~expression(); // destructor
     expression& operator=(const expression&);

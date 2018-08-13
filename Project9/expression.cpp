@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 #include "expression.h"
 
@@ -57,10 +58,12 @@ int expression::operateOn(const string& Operator, const int& arg1, const int& ar
     }
 }
 
-exprNode* expression::add(exprNode* root, vector<exprNode*>& expr) {
-    exprNode* first = new exprNode(*expr[0]);
-    delete expr[0];
-    expr.erase(expr.begin());
+exprNode* expression::add(exprNode* root, list<exprNode*>& expr) {
+    exprNode* first = new exprNode(*expr.front());
+    delete expr.front();
+    expr.pop_front();
+//    delete expr[0];
+//    expr.erase(expr.begin());
     root = first;
     if (!first->getIsOperand()) {
         root->setLeft(add(root->getLeft(), expr));
@@ -91,7 +94,7 @@ expression::expression() {
     this->root = nullptr;
 }
 
-expression::expression(vector<exprNode*>& exp) {
+expression::expression(list<exprNode*>& exp) {
     this->root = add(this->root, exp);
 }
 

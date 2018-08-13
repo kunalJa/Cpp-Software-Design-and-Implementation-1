@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 #include "Parse.h"
 #include "expression.h"
@@ -24,7 +25,7 @@ bool isNotCommand(const string& token) {
 void buildExpression(vector<command*>& commands, int& commandCounter) {
     string token;
     peek_next_token();
-    vector<exprNode*> expr;
+    list<exprNode*> expr;
     while(isNotCommand(next_token()) && next_token_type != END) {
         read_next_token();
         token = next_token();
