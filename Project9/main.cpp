@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <stack>
 #include <vector>
 #include <list>
 #include <map>
@@ -19,7 +20,7 @@ using namespace std;
 
 
 bool isNotCommand(const string& token) {
-    return token != "text" && token != "output" && token != "var" && token != "set";
+    return token != "text" && token != "output" && token != "var" && token != "set" && token != "if" && token != "else" && token != "fi";
 }
 
 void buildExpression(vector<command*>& commands, int& commandCounter) {
@@ -67,6 +68,8 @@ void run() {
                 read_next_token();
                 commands[commandCounter]->text = next_token();
                 buildExpression(commands, commandCounter);
+            } else if (commands[commandCounter]->currentCommand == "if") { // do nothing on else or fi
+                buildExpression(commands, commandCounter);
             }
             commandCounter++;
         } else {
@@ -79,27 +82,41 @@ void run() {
         read_next_token();
     }
 
-    int numCommands = commands.size();
-    for (int i = 0; i < numCommands; i++) {
+    bool executable = true;
+    stack<bool> depth;
+    unsigned long numCommands = commands.size();
+    for (unsigned long i = 0; i < numCommands; i++) {
         string currentCommand = commands[i]->currentCommand;
-        if (currentCommand == "text") {
+        if (currentCommand == "text" && executable) {
             cout << commands[i]->text;
-        } else if (currentCommand == "output") {
+        } else if (currentCommand == "output" && executable) {
             cout << commands[i]->output.parse(symbols);
-        } else if (currentCommand == "var") {
+        } else if (currentCommand == "var" && executable) {
             if (symbols[0].count(commands[i]->text) != 0) {
                 cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
-        } else if (currentCommand == "set") {
+        } else if (currentCommand == "set" && executable) {
             if (symbols[0].count(commands[i]->text) == 0) {
                 cout << "variable " << commands[i]->text << " not declared" << endl;
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
+        } else if (currentCommand == "if") {
+            depth.push(executable);
+            if (executable && !commands[i]->output.parse(symbols)) {
+                executable = false;
+            }
+        } else if (currentCommand == "else") { // assumes correct format for input fix this
+            if (depth.top()) {
+                executable ^= true; // toggle
+            }
+        } else if (currentCommand == "fi") {
+            executable = depth.top();
+            depth.pop();
         }
     }
 
-    for (int i = 0; i < numCommands; i++) {
+    for (unsigned long i = 0; i < numCommands; i++) {
         delete commands[i];
     }
 }
@@ -132,4 +149,7 @@ int main(void) {
 //    cout << endl;
 //    set_input("test9.blip");
 //    run();
+    cout << endl;
+    set_input("test10.blip");
+    run();
 }
