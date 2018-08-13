@@ -20,7 +20,7 @@ using namespace std;
 
 
 bool isNotCommand(const string& token) {
-    return token != "text" && token != "output" && token != "var" && token != "set" && token != "if" && token != "else" && token != "fi";
+    return token != "text" && token != "output" && token != "var" && token != "set" && token != "if" && token != "else" && token != "fi" && token != "do" && token != "od";
 }
 
 void buildExpression(vector<command*>& commands, int& commandCounter) {
@@ -70,6 +70,8 @@ void run() {
                 buildExpression(commands, commandCounter);
             } else if (commands[commandCounter]->currentCommand == "if") { // do nothing on else or fi
                 buildExpression(commands, commandCounter);
+            } else if (commands[commandCounter]->currentCommand == "do") { // do nothing on do
+                buildExpression(commands, commandCounter);
             }
             commandCounter++;
         } else {
@@ -83,20 +85,21 @@ void run() {
     }
 
     bool executable = true;
+    stack<unsigned  long> index;
     stack<bool> depth;
     unsigned long numCommands = commands.size();
     for (unsigned long i = 0; i < numCommands; i++) {
         string currentCommand = commands[i]->currentCommand;
-        if (currentCommand == "text" && executable) {
+        if (executable && currentCommand == "text") {
             cout << commands[i]->text;
-        } else if (currentCommand == "output" && executable) {
+        } else if (executable && currentCommand == "output") {
             cout << commands[i]->output.parse(symbols);
-        } else if (currentCommand == "var" && executable) {
+        } else if (executable && currentCommand == "var") {
             if (symbols[0].count(commands[i]->text) != 0) {
                 cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
-        } else if (currentCommand == "set" && executable) {
+        } else if (executable && currentCommand == "set") {
             if (symbols[0].count(commands[i]->text) == 0) {
                 cout << "variable " << commands[i]->text << " not declared" << endl;
             }
@@ -113,6 +116,23 @@ void run() {
         } else if (currentCommand == "fi") {
             executable = depth.top();
             depth.pop();
+        } else if (currentCommand == "do") {
+            depth.push(executable);
+            if (executable) {
+                if (!commands[i]->output.parse(symbols)) {
+                    executable = false;
+                } else {
+                    index.push(i);
+                }
+            }
+        } else if (currentCommand == "od") {
+            if (executable) {
+                i = index.top() - 1; // for loop immediately increments i
+                        // cant have od as first line!! this breaks becuase i is unsigned long
+                index.pop();
+            }
+            executable = depth.top();
+            depth.pop();
         }
     }
 
@@ -123,11 +143,11 @@ void run() {
 
 
 int main(void) {
-    set_input("test1.blip");
-    run();
-    cout << endl;
-    set_input("test2.blip");
-    run();
+//    set_input("test1.blip");
+//    run();
+//    cout << endl;
+//    set_input("test2.blip");
+//    run();
 //    cout << endl;
 //    set_input("test3.blip");
 //    run();
@@ -137,19 +157,19 @@ int main(void) {
 //    cout << endl;
 //    set_input("test5.blip");
 //    run();
-//    cout << endl;
-//    set_input("test6.blip");
-//    run();
-//    cout << endl;
-//    set_input("test7.blip");
-//    run();
+    cout << endl;
+    set_input("test6.blip");
+    run();
+    cout << endl;
+    set_input("test7.blip");
+    run();
 //    cout << endl;
 //    set_input("test8.blip");
 //    run();
 //    cout << endl;
 //    set_input("test9.blip");
 //    run();
-    cout << endl;
-    set_input("test10.blip");
-    run();
+//    cout << endl;
+//    set_input("test10.blip");
+//    run();
 }
