@@ -57,10 +57,12 @@ public:
 
 	const char* c_str(void) { return ptr; }
 
-	int hash() {
-	    int hashVal = 0;
-	    for (int i = 0; i < len; i++) {
-	        hashVal += (ptr[i] * i);
+	unsigned long hash() {
+        unsigned long hashVal = 0;
+        unsigned long prime = 1;
+	    for (uint32_t i = 0; i < len; i++) {
+	        hashVal += (ptr[i] * prime);
+            prime *= 31;
 	    }
 
 	    return hashVal;

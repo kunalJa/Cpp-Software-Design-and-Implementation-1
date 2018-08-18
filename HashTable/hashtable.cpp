@@ -3,96 +3,107 @@
 
 using namespace std;
 
-/* 
- * This is a hash table holding int values.
- * The hash table has an array of Nodes called buckets.  
- * 
- */
 
 template <class T>
-struct Node { // Linked list to hold entries at each position.
-    T el; // value to be entered in the hash table
-    Node* next;
+struct Node {
+    T el;
+    struct Node* next = nullptr;
 };
 
 template <class T>
 class HashTable {
 private:
-    Node<T>** buckets; // An array of Node pointers.
-    int size; // size of the table, not the number of entries
+    Node<T>** buckets;
+    int size;
 
-    int hash(int el) { // Hash function is a modulo function
+    int hash(int el) {
         return el % size; 
     }
 
-public:
-    HashTable(int size) {
-        this->size = size;
-        buckets = new Node<T>*[size]; // create an array of Node pointers
-        for (int i = 0; i < size; i++) {
-            buckets[i] = NULL; // initialize each Node pointer in array
+    void rehash() {
+        int oldSize = this->size;
+        Node<T>** bucketsOld = this->buckets;
+        this->size += 17;
+        this->buckets = new Node<T>*[this->size];
+        for (int i = 0; i < this->size; i++) {
+            buckets[i] = nullptr;
         }
+
+        for (int j = 0; j < oldSize; j++) {
+            Node<T>* head = bucketsOld[j];
+            while (head != nullptr) {
+                insert(head->el);
+                head = head->next;
+            }
+        }
+
+        for (int k = 0; k < oldSize; k++) {
+            destroy(bucketsOld[k]);
+        }
+
+        delete [] bucketsOld;
+    }
+
+    void destroy(Node<T>*& root) {
+        if (root == nullptr) {
+            return;
+        }
+
+        destroy(root->next);
+        delete root;
+    }
+
+public:
+    explicit HashTable(int size) {
+        this->size = size;
+        buckets = new Node<T>*[size];
+        for (int i = 0; i < this->size; i++) {
+            buckets[i] = nullptr;
+        }
+    }
+
+    ~HashTable() {
+        for (int i = 0; i < this->size; i++) {
+            destroy(this->buckets[i]);
+        }
+        delete [] this->buckets;
     }
 
     void insert(T el) {
-        Node<T>* n = new Node<T>(); // create a new Node object
-        n->el = el; // initialize new Node's variables
-        n->next = NULL;
+        Node<T>* nodeNew = new Node<T>();
+        nodeNew->el = el;
+        nodeNew->next = nullptr;
+        int ix = hash(el.hash());  // Assumes type T has a hash function
 
-        int ix = hash(el.hash());  // calculate the place where the new value will be placed
-
-        int j = 0;
-        Node<T>* head = buckets[ix]; // the head of the linked-list at location ix
-        while (head != NULL) { // search through the linked-list at that location
-            if (head->el == el) { // if found, return true
-                cout << "DUPLICATE" << endl;
+        int count = 0;
+        Node<T>* prev = nullptr;
+        Node<T>* head = buckets[ix];
+        while (head != nullptr) { // insert into end of the linked list at that place ix
+            if (head->el == el) { // No duplicates
+                delete nodeNew;
+                return;
             }
+            prev = head;
             head = head->next;
-            j++;
+            count++;
         }
 
-        if (j >= size - 7) {
-            this->printMe();
-
-            this->size = 2*size; // getNextPrime() function
-            Node<T>** bigger = new Node<T>*[size]; // create an array of Node pointers
-            for (int i = 0; i < size; i++) {
-                buckets[i] = NULL; // initialize each Node pointer in array
-            }
-
-            for (int i = 0; i < size/2; i++) {
-                Node<T>* head = buckets[i]; // the head of the linked-list at location ix
-                while (head != NULL) { // search through the linked-list at that location
-                    Node<T>* n = new Node<T>(); // create a new Node object
-                    n->el = buckets[i]->el; // initialize new Node's variables
-                    n->next = NULL;
-
-                    int ix = hash(el.hash());  // calculate the place where the new value will be placed
-                    if (bigger[ix] != NULL) { // insert into front of the linked list at that place ix
-                        n->next = bigger[ix];
-                    }
-
-                    bigger[ix] = n;
-                    head = head->next;
-                    delete buckets[ix];
-                }
-            }
-
-            buckets = bigger;
+        if (prev) {
+            prev->next = nodeNew;
+        } else {
+            buckets[ix] = nodeNew;
         }
 
-        if (buckets[ix] != NULL) { // insert into front of the linked list at that place ix
-            n->next = buckets[ix];
+        if (count >= 5) {
+            rehash();
         }
-
-        buckets[ix] = n;
     }
 
     bool find(T el) { // find the value el in the list
-        int ix = hash(el.hash());  // find the index of the hash table where the element might be
-        Node<T>* head = buckets[ix]; // the head of the linked-list at location ix
-        while (head != NULL) { // search through the linked-list at that location
-            if (head->el == el) { // if found, return true
+        int ix = hash(el.hash());  // Assumes type T has a hash function
+        Node<T>* head = buckets[ix];
+        while (head != nullptr) { // search through the linked-list at that location
+            if (head->el == el) {
                 return true;
             }
             head = head->next;
@@ -102,10 +113,10 @@ public:
 
     void printMe() {
         for (int i = 0; i < this->size; i++) {
-            cout << i << " ";
+            cout << i << ": ";
             Node<T>* head = buckets[i];
-            while (head != NULL) {
-                cout << head->el << " ";
+            while (head != nullptr) {
+                cout << head->el << ", ";
                 head = head->next;
             }
             cout << endl;
@@ -114,28 +125,32 @@ public:
 };
 
 int main(void) {
-    HashTable<String> h1(11);
-    String word1("test1");
-    String word2("test2");
-    String word3("test3");
-    String notThere("BAD");
-    h1.insert(word1);
-    h1.insert(word2);
-    h1.insert(word3);
-    if (h1.find(notThere)) {
+    HashTable<String> h1(3);
+    h1.insert("test1");
+    h1.insert("test2");
+    h1.insert("test3");
+    if (h1.find("not there")) {
         cout << "BAD" << endl;
     }
 
-    if (h1.find(word1)) {
+    if (h1.find("test1")) {
         cout << "TESTING FIND AND INSERT SINGLE\n" << endl;
         h1.printMe();
-        cout << "\n\n" << endl;
+        cout << "\n" << endl;
     }
 
-    h1.insert(word1); // duplicates go in
-    h1.insert(word1); // duplicates go in
-    h1.insert(word1); // duplicates go in
-    h1.insert(word1); // duplicates go in, should rehash
+    cout << "TESTING DUPLICATES\n" << endl;
+    h1.insert("test4");
+    h1.insert("test5");
+    h1.insert("test6");
+    h1.insert("test7");
+    h1.insert("test1"); // duplicates don't go in
+    h1.insert("test4"); // duplicates don't go in
+    h1.printMe();
+
+    cout << "\n\nTESTING REHASH\n" << endl;
+    h1.insert("a");
+    h1.insert("A");
     h1.printMe();
     return 0;
 }
