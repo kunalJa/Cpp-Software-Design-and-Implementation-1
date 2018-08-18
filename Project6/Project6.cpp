@@ -118,7 +118,7 @@ double sqrtRec(double x, double low_guess, double high_guess) {
 
 	// Base case, when our guesses are numbers within 1^-15 of each other
 	// They are accurate enough
-	if (high_guess - low_guess <= 0.000000000000001) {
+	if (guess == low_guess || guess == high_guess) {
 	    return guess;
 	}
 
