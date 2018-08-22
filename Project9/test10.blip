@@ -77,4 +77,36 @@ do || || isFalse isTrue == x 5
     od
 od
 
-text done
+text done\n\n
+
+var on 1
+
+do on
+    text 1
+    do on
+        text 2
+        do on
+            text 3
+            do on
+                text 4
+                do on
+                    text 5
+                    do on
+                        text 6
+                        do on
+                            text 7
+                            set on 0
+                        od
+                        text 8
+                    od
+                    text 9
+                od
+                text 10
+            od
+            text 11
+        od
+        text 12
+    od
+    text 13
+od
+text 14

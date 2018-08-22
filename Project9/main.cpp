@@ -20,7 +20,11 @@ using namespace std;
 
 
 bool isNotCommand(const string& token) {
-    return token != "text" && token != "output" && token != "var" && token != "set" && token != "if" && token != "else" && token != "fi" && token != "do" && token != "od";
+    return token != "text" && token != "output" && token != "var" &&
+           token != "set" && token != "if" && token != "else" && token != "fi" &&
+           token != "do" && token != "od" && token != "call" && token != "defun" &&
+           token != "nufed" && token != "return" && token != "params" && token != "smarap" &&
+           token != "args" && token != "sgra";
 }
 
 void buildExpression(vector<command*>& commands, int& commandCounter) {
@@ -64,7 +68,8 @@ void run() {
                 commands[commandCounter]->text = next_token();
             } else if (commands[commandCounter]->currentCommand == "output") {
                 buildExpression(commands, commandCounter);
-            } else if (commands[commandCounter]->currentCommand == "var" || commands[commandCounter]->currentCommand == "set") {
+            } else if (commands[commandCounter]->currentCommand == "var" ||
+                       commands[commandCounter]->currentCommand == "set") {
                 read_next_token();
                 commands[commandCounter]->text = next_token();
                 buildExpression(commands, commandCounter);
@@ -143,6 +148,33 @@ void run() {
 
 
 int main(void) {
-    set_input("test_grader.blip");
+//    set_input("test1.blip");
+//    run();
+//    cout << endl;
+//    set_input("test2.blip");
+//    run();
+//    cout << endl;
+//    set_input("test3.blip");
+//    run();
+//    cout << endl;
+//    set_input("test4.blip");
+//    run();
+//    cout << endl;
+//    set_input("test5.blip");
+//    run();
+//    cout << endl;
+//    set_input("test6.blip");
+//    run();
+//    cout << endl;
+//    set_input("test7.blip");
+//    run();
+//    cout << endl;
+//    set_input("test8.blip");
+//    run();
+//    cout << endl;
+//    set_input("test9.blip");
+//    run();
+//    cout << endl;
+    set_input("test10.blip");
     run();
 }
