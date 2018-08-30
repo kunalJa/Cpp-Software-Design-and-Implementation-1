@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 #include <list>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -123,7 +123,7 @@ private:
     static bool isBinary(const string&);
     static int operateOn(const string&, const int&, const int&);
     exprNode* add(exprNode*, list<exprNode*>&);
-    int parse(exprNode*, vector<map<string, int>>&) const;
+    int parse(exprNode*, vector<unordered_map<string, int>>&) const;
 
 public:
     expression(); // default constructor
@@ -132,7 +132,7 @@ public:
     ~expression(); // destructor
     expression& operator=(const expression&);
 
-    int parse(vector<map<string, int>>&);
+    int parse(vector<unordered_map<string, int>>&);
 };
 
 

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <list>
-#include <map>
+#include <unordered_map>
 #include "expression.h"
 
 using namespace std;
@@ -76,7 +76,7 @@ exprNode* expression::add(exprNode* root, list<exprNode*>& expr) {
     return root;
 }
 
-int expression::parse(exprNode* root, vector<map<string, int>>& symb) const {
+int expression::parse(exprNode* root, vector<unordered_map<string, int>>& symb) const {
     if(root->getIsOperand()) {
         if (root->getIsSymbol()) {
             return symb[0][root->getVar()];
@@ -115,6 +115,6 @@ expression& expression::operator=(const expression& other) {
     return *this;
 }
 
-int expression::parse(vector<map<string, int>>& symb) {
+int expression::parse(vector<unordered_map<string, int>>& symb) {
     return parse(this->root, symb);
 }

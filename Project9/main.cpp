@@ -10,7 +10,7 @@
 #include <stack>
 #include <vector>
 #include <list>
-#include <map>
+#include <unordered_map>
 #include "Parse.h"
 #include "expression.h"
 #include "command.h"
@@ -27,7 +27,7 @@ bool isNotCommand(const string& token) {
            token != "args" && token != "sgra";
 }
 
-void buildExpression(vector<command*>& commands, int& commandCounter) {
+void buildExpression(vector<command*>& commands, unsigned long& commandCounter) {
     string token;
     peek_next_token();
     list<exprNode*> expr;
@@ -52,11 +52,12 @@ void buildExpression(vector<command*>& commands, int& commandCounter) {
 }
 
 void run() {
-    map<string, int> global;
-    vector<map<string, int>> symbols; // vector for scope
+    unordered_map<string, int> global;
+    vector<unordered_map<string, int>> symbols; // vector for scope
     symbols.push_back(global);
     vector<command*> commands;
-    int commandCounter = 0;
+    stack<unsigned long> functionI;
+    unsigned long commandCounter = 0;
 
     read_next_token();
     while(next_token_type != END) {
@@ -77,6 +78,9 @@ void run() {
                 buildExpression(commands, commandCounter);
             } else if (commands[commandCounter]->currentCommand == "do") { // do nothing on do
                 buildExpression(commands, commandCounter);
+            } else if (commands[commandCounter]->currentCommand == "defun") {
+                read_next_token();
+                commands[commandCounter]->text = next_token();
             }
             commandCounter++;
         } else {
