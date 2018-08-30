@@ -104,12 +104,12 @@ void run() {
         } else if (executable && currentCommand == "output") {
             cout << commands[i]->output.parse(symbols);
         } else if (executable && currentCommand == "var") {
-            if (symbols[0].count(commands[i]->text) != 0) {
+            if (symbols[0].find(commands[i]->text) != symbols[0].end()) {
                 cout << "variable " << commands[i]->text << " incorrectly re-initialized" << endl;
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
         } else if (executable && currentCommand == "set") {
-            if (symbols[0].count(commands[i]->text) == 0) {
+            if (symbols[0].find(commands[i]->text) == symbols[0].end()) {
                 cout << "variable " << commands[i]->text << " not declared" << endl;
             }
             symbols[0][commands[i]->text] = commands[i]->output.parse(symbols);
