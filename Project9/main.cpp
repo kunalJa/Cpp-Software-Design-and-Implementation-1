@@ -24,7 +24,7 @@ bool isNotCommand(const string& token) {
            token != "set" && token != "if" && token != "else" && token != "fi" &&
            token != "do" && token != "od" && token != "call" && token != "defun" &&
            token != "nufed" && token != "return" && token != "params" && token != "smarap" &&
-           token != "args" && token != "sgra";
+           token != "args" && token != "sgra" && token != ":"; // params separated by :
 }
 
 void buildExpression(vector<command*>& commands, unsigned long& commandCounter) {
@@ -76,7 +76,7 @@ void run() {
                 buildExpression(commands, commandCounter);
             } else if (commands[commandCounter]->currentCommand == "if") { // do nothing on else or fi
                 buildExpression(commands, commandCounter);
-            } else if (commands[commandCounter]->currentCommand == "do") { // do nothing on do
+            } else if (commands[commandCounter]->currentCommand == "do") { // do nothing on od
                 buildExpression(commands, commandCounter);
             } else if (commands[commandCounter]->currentCommand == "defun") {
                 read_next_token();
