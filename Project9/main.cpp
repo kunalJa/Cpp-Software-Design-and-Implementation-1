@@ -56,7 +56,7 @@ void run() {
     vector<unordered_map<string, int>> symbols; // vector for scope
     symbols.push_back(global);
     vector<command*> commands;
-    unordered_map<string, unsigned long> functionI; // function map
+    unordered_map<string, functionMetadata> functions; // function map
     unsigned long commandCounter = 0;
 
     read_next_token();
@@ -81,12 +81,16 @@ void run() {
             } else if (commands[commandCounter]->currentCommand == "defun") {
                 read_next_token();
                 commands[commandCounter]->text = next_token(); // function name is in text
-                functionI[commands[commandCounter]->text] = commandCounter; // put the function:index in the map
+                functions[commands[commandCounter]->text].index = commandCounter; // put the function:index in the map
                 read_next_token();
                 if (string(next_token()) != "params") { // investigate why string needs to be there
                     // ERROR
                 } else {
-                    // put params into some kind of vector or map?
+                    read_next_token();
+                    while (string(next_token()) != "smarap") {
+                        functions[commands[commandCounter]->text].params.push_back(next_token());
+                        read_next_token();
+                    }
                 }
             }
             commandCounter++;
