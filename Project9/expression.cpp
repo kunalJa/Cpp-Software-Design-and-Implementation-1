@@ -79,7 +79,13 @@ exprNode* expression::add(exprNode* root, list<exprNode*>& expr) {
 int expression::parse(exprNode* root, vector<unordered_map<string, int>>& symb) const {
     if(root->getIsOperand()) {
         if (root->getIsSymbol()) {
-            return symb[0][root->getVar()];
+            if ((*(symb.end() - 1)).find(root->getVar()) != (*(symb.end() - 1)).end()) {
+                return (*(symb.end() - 1))[root->getVar()]; // check end of vector (i.e. local scope)
+            } else if (symb.size() > 1 && symb[0].find(root->getVar()) != symb[0].end()) {
+                return symb[0][root->getVar()]; // check symb[0] (i.e. global scope)
+            } else {
+                // ERROR
+            }
         }
 
         return root->getOperand();

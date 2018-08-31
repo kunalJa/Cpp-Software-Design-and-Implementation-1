@@ -17,7 +17,7 @@ private:
     bool isOperand;
     int operand;
     bool isSymbol;
-    string var;
+    string var; // call gets added here
     string operatorType;
     exprNode* left;
     exprNode* right;

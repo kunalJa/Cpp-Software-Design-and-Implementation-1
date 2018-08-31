@@ -41,9 +41,14 @@ void buildExpression(vector<command*>& commands, unsigned long& commandCounter) 
         if (next_token_type == NUMBER) {
             expr.push_back(new exprNode(true, token_number_value, false, "", ""));
         } else if (next_token_type == SYMBOL) {
-            expr.push_back(new exprNode(false, 0, false, "", next_token()));
+            expr.push_back(new exprNode(false, 0, false, "", token));
         } else if (next_token_type == NAME) {
-            expr.push_back(new exprNode(true, 0, true, next_token(), ""));
+            if (token == "call") {
+                read_next_token();
+                expr.push_back(new exprNode(true, 0, true, token, next_token())); // put call into var and name of func into operator
+            } else {
+                expr.push_back(new exprNode(true, 0, true, token, ""));
+            }
         }
         peek_next_token();
     }
@@ -88,7 +93,7 @@ void run() {
                 } else {
                     read_next_token();
                     while (string(next_token()) != "smarap") {
-                        functions[commands[commandCounter]->text].params.push_back(next_token());
+                        functions[commands[commandCounter]->text].params.emplace_back(next_token()); // emplace_ vs push_?
                         read_next_token();
                     }
                 }
