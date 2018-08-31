@@ -24,7 +24,7 @@ bool isNotCommand(const string& token) {
            token != "set" && token != "if" && token != "else" && token != "fi" &&
            token != "do" && token != "od" && token != "call" && token != "defun" &&
            token != "nufed" && token != "return" && token != "params" && token != "smarap" &&
-           token != "args" && token != "sgra" && token != ":"; // params separated by :
+           token != "args" && token != "sgra" && token != ":"; // args separated by : ?
 }
 
 void buildExpression(vector<command*>& commands, unsigned long& commandCounter) {
@@ -86,7 +86,7 @@ void run() {
                 if (string(next_token()) != "params") { // investigate why string needs to be there
                     // ERROR
                 } else {
-                    buildExpression(commands, commandCounter);
+                    // put params into some kind of vector or map?
                 }
             }
             commandCounter++;
