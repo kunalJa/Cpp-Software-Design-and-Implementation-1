@@ -1,10 +1,3 @@
-// CRM <Project4.cpp>
-// EE 312 Project 4 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-
 #include <stdio.h>
 #include <assert.h>
 #include "MyString.h"
