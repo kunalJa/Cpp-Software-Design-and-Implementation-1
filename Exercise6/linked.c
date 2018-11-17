@@ -1,7 +1,4 @@
-/* Kunal Jain
- * ksj572
- * EE312 Recitation 6
- * Implementing Linked List Functions
+/* Implementing Linked List Functions
  * The signture of the functions has already been 
  * defined for you, all you need to do is write these
  * functions and turn it in before DDL
