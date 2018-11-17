@@ -1,6 +1,3 @@
-ksj572
-kunal Jain
-
 Most often, we run into memory problems having to do with index out of bound errors.
 This occurs because we try to access areas of memory outside those bounded
 by our operating system or those bounded by the specific data structure we are using.
