@@ -1,10 +1,3 @@
-// Recursion <Project6.cpp>
-// EE 312 Project 6 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer2018
-
 #include <stdio.h>
 #include <stdint.h>
 #include "MazeParams.h"
