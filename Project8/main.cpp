@@ -1,10 +1,3 @@
-// Blip <Project8.cpp>
-// EE 312 Project 8 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-
 #include <iostream>
 #include <string>
 #include <vector>
