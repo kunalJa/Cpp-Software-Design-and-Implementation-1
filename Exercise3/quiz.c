@@ -1,8 +1,3 @@
-/**
- * 2018 Spring, Recitation3
- * Name: Kunal Jain
- * UT EID: ksj572
- */
 #include <stdio.h>
 #include <stdlib.h>
 
