@@ -1,11 +1,3 @@
-/*
- * Name: Kunal Jain
- * EID: ksj572
- * Slip days: 0
- * Project 7, CRM part 2
- * EE 312, Summer 2018
- */
-
 #include <iostream>
 #include <stdio.h>
 #include "String.h"
