@@ -1,10 +1,3 @@
-// matrix-multiplication <Project2.cpp>
-// EE 312 Project 2 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
