@@ -1,7 +1,3 @@
-//
-// Created by kunal on 8/9/18.
-//
-
 #ifndef PROJECT8_COMMAND_H
 #define PROJECT8_COMMAND_H
 #include <string>
