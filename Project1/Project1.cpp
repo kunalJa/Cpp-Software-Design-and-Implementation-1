@@ -1,11 +1,3 @@
-// SpellCheck <Project1.cpp>
-// EE w312 Project 1 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-
-
 #include <stdio.h> // provides declarations for printf and putchar
 #include <stdint.h> // provides declarations for int32_t uint32_t and the other (new) standard C types
 
