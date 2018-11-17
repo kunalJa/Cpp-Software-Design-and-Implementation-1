@@ -1,12 +1,3 @@
-//
-// String ADT <Project3.cpp>
-// EE 312 Project 3 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-//
-
 #include <assert.h>
 #include <stdbool.h>
 #include <stdlib.h>
