@@ -1,10 +1,3 @@
-// Set <Project5.cpp>
-// EE 312 Project 5 submission by
-// Kunal Jain
-// ksj572
-// Slip days used: 0
-// Summer 2018
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
