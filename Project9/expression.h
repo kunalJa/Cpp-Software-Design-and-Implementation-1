@@ -1,7 +1,3 @@
-//
-// Created by kunal on 8/6/18.
-//
-
 #ifndef PROJECT8_EXPRESSION_H
 #define PROJECT8_EXPRESSION_H
 
